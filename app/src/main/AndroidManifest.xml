@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="uni.tighearnan.routepicker"
+<manifest xmlns:tools="http://schemas.android.com/tools"
+    package="uni.tighearnan.routepicker"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
@@ -27,6 +28,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".JourneyPlannerActivity">
+        </activity>
+        <activity
+            android:name=".JourneyDetailsActivity"
+            android:parentActivityName=".JourneyPlannerActivity">
         </activity>
     </application>
 

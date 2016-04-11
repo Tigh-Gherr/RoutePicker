@@ -1,6 +1,7 @@
 package uni.tighearnan.routepicker;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -77,6 +78,7 @@ public class JourneyPlannerFragment extends Fragment {
     private void tryLocations() {
         mFromEditText.setError(null);
         mToEditText.setError(null);
+        boolean cancel = false;
 
         String from = mFromEditText.getText().toString();
         String to = mToEditText.getText().toString();
@@ -86,6 +88,7 @@ public class JourneyPlannerFragment extends Fragment {
         if(!isValid(mFromEditText)) {
             mFromEditText.setError("\"" + from + "\" is not a valid location.");
             errorView = mFromEditText;
+            cancel = true;
         }
 
         if(!isValid(mToEditText)) {
@@ -93,6 +96,17 @@ public class JourneyPlannerFragment extends Fragment {
             if(errorView == null) {
                 errorView = mToEditText;
             }
+            cancel = true;
+        }
+
+        if (cancel) {
+            errorView.requestFocus();
+        } else {
+            Intent i = new Intent(getActivity(), JourneyDetailsActivity.class);
+            i.putExtra("FROM",from);
+            i.putExtra("TO", to);
+
+            startActivity(i);
         }
     }
 

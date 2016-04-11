@@ -21,4 +21,8 @@
     <string name="activity_sign_in">Sign In</string>
     <string name="hint_trav_from">Travelling From</string>
     <string name="hint_trav_to">Travelling To</string>
+
+    <string name="journey_detail_from">From: %s</string>
+    <string name="journey_detail_to">To: %s</string>
+    <string name="journey_detail_cost">Cost: £%s</string>
 </resources>
