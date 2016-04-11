@@ -38,7 +38,7 @@ public class JourneyPlannerFragment extends Fragment {
             }
 
             if(hasFocus) {
-                DrawableCompat.setTint(search.getDrawable(), ContextCompat.getColor(getActivity(), R.color.colorAccent));
+                DrawableCompat.setTint(search.getDrawable(), ContextCompat.getColor(getActivity(), R.color.colorControlActivated));
             } else {
                 DrawableCompat.setTint(search.getDrawable(), ContextCompat.getColor(getActivity(), R.color.md_white_1000));
             }

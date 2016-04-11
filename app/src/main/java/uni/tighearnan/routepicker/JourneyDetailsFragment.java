@@ -47,12 +47,16 @@ public class JourneyDetailsFragment extends Fragment {
         mCostTextView = (AppCompatTextView) v.findViewById(R.id.text_view_totalCost);
 
         mReturnSwitch = (SwitchCompat) v.findViewById(R.id.switch_return);
+        mDisabilitySwitch = (SwitchCompat) v.findViewById(R.id.switch_disability);
+
         mReturnSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 updateCost(isChecked);
             }
         });
+
+        mConfirmButton = (AppCompatButton) v.findViewById(R.id.button_confirm);
 
         setupJourneyDetails();
 
