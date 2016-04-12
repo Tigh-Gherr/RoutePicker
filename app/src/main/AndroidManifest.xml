@@ -39,6 +39,7 @@
         </activity>
         <activity
             android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan"
             android:label="@string/activity_title_confirm_and_pay"
             android:name=".PaymentActivity"
             android:parentActivityName=".JourneyDetailsActivity">

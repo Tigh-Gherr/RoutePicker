@@ -43,9 +43,10 @@
                 android:id="@+id/text_view_return"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="Return"
+                android:layout_below="@id/text_view_to"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@id/text_view_totalCost"
+                android:text="(Return)"
                 android:textSize="18sp" />
 
         </RelativeLayout>
@@ -66,33 +67,33 @@
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edit_text_firstName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
-                android:singleLine="true"
+                android:hint="First Name"
                 android:imeOptions="actionNext"
-                android:hint="First Name" />
+                android:maxLines="1"
+                android:singleLine="true" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edit_text_surname"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:inputType="textPersonName"
-                android:imeOptions="actionDone"
                 android:layout_weight="1"
-                android:hint="Surename\ \ \ \ " />
+                android:hint="Surname"
+                android:imeOptions="actionDone"
+                android:inputType="textPersonName"
+                android:maxLines="1"
+                android:singleLine="true" />
 
         </LinearLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:paddingBottom="8dp"
             android:paddingTop="8sp">
 
             <android.support.v7.widget.AppCompatTextView
@@ -107,12 +108,125 @@
                 android:id="@+id/spinner_cardType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:entries="@array/card_types"
-                android:layout_gravity="right" />
+                android:layout_gravity="right"
+                android:entries="@array/card_types" />
 
         </FrameLayout>
 
-        
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:text="Card Number:"
+            android:textSize="18sp" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edit_text_cardNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:hint="XXXX-XXXX-XXXX-XXXX"
+            android:maxLength="16"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center"
+                android:text="Expiration Date:"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edit_text_expMonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="MM"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:maxLines="1"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:singleLine="true" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/"
+                    android:textSize="18sp" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edit_text_expYear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="YY"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:maxLines="1"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:singleLine="true" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center"
+                android:text="Billing Address:"
+                android:textSize="18sp" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/edit_text_addressLine1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:hint="Line 1"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLength="1"
+                android:singleLine="true" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edit_text_addressLine2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:hint="Line 2"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true" />
+
 
     </LinearLayout>
 
