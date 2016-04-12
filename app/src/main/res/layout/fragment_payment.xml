@@ -69,12 +69,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
                 android:hint="First Name" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edit_text_surname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:inputType="textPersonName"
+                android:imeOptions="actionDone"
                 android:layout_weight="1"
                 android:hint="Surename\ \ \ \ " />
 
@@ -92,13 +99,15 @@
                 android:id="@+id/text_view_cardType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="left|center"
                 android:text="Card type:"
                 android:textSize="18sp" />
 
             <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinner_cardType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:entries="@array/card_types"
                 android:layout_gravity="right" />
 
         </FrameLayout>

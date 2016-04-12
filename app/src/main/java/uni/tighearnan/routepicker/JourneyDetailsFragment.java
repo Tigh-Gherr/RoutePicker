@@ -1,6 +1,7 @@
 package uni.tighearnan.routepicker;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
@@ -57,6 +58,12 @@ public class JourneyDetailsFragment extends Fragment {
         });
 
         mConfirmButton = (AppCompatButton) v.findViewById(R.id.button_confirm);
+        mConfirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                proceedToPayment();
+            }
+        });
 
         setupJourneyDetails();
 
@@ -64,8 +71,8 @@ public class JourneyDetailsFragment extends Fragment {
     }
 
     private void setupJourneyDetails() {
-        String from = getActivity().getIntent().getStringExtra("FROM");
-        String to = getActivity().getIntent().getStringExtra("TO");
+        String from = getStringIntent("FROM");
+        String to = getStringIntent("TO");
 
         mFromTextView.setText(getString(R.string.journey_detail_from, from));
         mToTextView.setText(getString(R.string.journey_detail_to, to));
@@ -81,6 +88,10 @@ public class JourneyDetailsFragment extends Fragment {
         updateCost(mReturnSwitch.isChecked());
     }
 
+    private String getStringIntent(String to) {
+        return getActivity().getIntent().getStringExtra(to);
+    }
+
     private void updateCost(boolean isReturn) {
         DecimalFormat df = new DecimalFormat("0.00");
         String price;
@@ -92,5 +103,18 @@ public class JourneyDetailsFragment extends Fragment {
             price = df.format(mBaseCost);
             mCostTextView.setText(getString(R.string.journey_detail_cost, price));
         }
+    }
+
+    private void proceedToPayment() {
+        Intent i = new Intent(getActivity(), PaymentActivity.class);
+        DecimalFormat df = new DecimalFormat("0.00");
+        boolean isReturn = mReturnSwitch.isChecked();
+
+        i.putExtra("FROM", getStringIntent("FROM"));
+        i.putExtra("TO", getStringIntent("TO"));
+        i.putExtra("COST", df.format(isReturn ? mBaseCost * 1.5 : mBaseCost));
+        i.putExtra("RETURN", isReturn);
+
+        startActivity(i);
     }
 }

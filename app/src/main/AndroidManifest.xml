@@ -37,7 +37,11 @@
             android:launchMode="singleTask"
             android:parentActivityName=".JourneyPlannerActivity">
         </activity>
-        <activity android:name=".PaymentActivity">
+        <activity
+            android:launchMode="singleTask"
+            android:label="@string/activity_title_confirm_and_pay"
+            android:name=".PaymentActivity"
+            android:parentActivityName=".JourneyDetailsActivity">
         </activity>
     </application>
 

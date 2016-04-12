@@ -111,7 +111,7 @@ public class JourneyPlannerFragment extends Fragment {
     }
 
     private boolean isValid(AppCompatEditText editText) {
-        return editText.getText().toString().length() > 2;
+        return editText.getText().toString().length() > 3;
     }
 
 }
