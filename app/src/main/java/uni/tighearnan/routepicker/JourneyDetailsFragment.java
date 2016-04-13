@@ -2,15 +2,23 @@ package uni.tighearnan.routepicker;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 
 import java.text.DecimalFormat;
 import java.util.Random;
@@ -29,6 +37,8 @@ public class JourneyDetailsFragment extends Fragment {
 
     private AppCompatTextView mCostTextView;
     private AppCompatButton mConfirmButton;
+
+    private AppCompatImageView mTestBarcodeImageView;
 
     private double mBaseCost;
 
@@ -65,9 +75,26 @@ public class JourneyDetailsFragment extends Fragment {
             }
         });
 
+        mTestBarcodeImageView = (AppCompatImageView) v.findViewById(R.id.image_view_testBarcode);
+
         setupJourneyDetails();
 
+//        generateBarcodeZxing();
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+//        int width = metrics.widthPixels - ((metrics.widthPixels / 16) * 2);
+
+        mTestBarcodeImageView.setImageBitmap(BarcodeGenerator.generateBarcodeBitmap("012345678901",
+                BarcodeFormat.ITF, metrics.widthPixels, 400));
         return v;
+    }
+
+    public void toggleBarcode() {
+        boolean isVisible = mTestBarcodeImageView.getVisibility() == View.VISIBLE;
+
+        mTestBarcodeImageView.setVisibility(isVisible ? View.GONE : View.VISIBLE);
     }
 
     private void setupJourneyDetails() {
