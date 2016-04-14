@@ -21,6 +21,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
@@ -91,7 +92,9 @@ public class JourneyDetailsFragment extends Fragment {
                     // TODO: 14/04/16 Dynamic zoom updates.
                     LatLng from = addMarker(googleMap, getStringIntent("FROM"));
                     LatLng to = addMarker(googleMap, getStringIntent("TO"));
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(midpoint(from, to)));
+                    LatLngBounds bounds = new LatLngBounds.Builder().include(from).include(to).build();
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
+//                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(midpoint(from, to)));
 
                 } catch (IOException e) {
                     e.printStackTrace();
