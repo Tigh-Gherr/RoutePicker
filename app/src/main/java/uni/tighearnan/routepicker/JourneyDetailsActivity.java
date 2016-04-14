@@ -36,7 +36,7 @@ public class JourneyDetailsActivity extends AppCompatActivity {
             case R.id.action_toggleBarcode:
                 FragmentManager fm = getSupportFragmentManager();
                 JourneyDetailsFragment fragment = (JourneyDetailsFragment) fm.findFragmentById(R.id.fragment);
-                fragment.toggleBarcode();
+//                fragment.toggleBarcode();
                 break;
         }
 

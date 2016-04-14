@@ -1,10 +1,11 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="uni.tighearnan.routepicker.JourneyDetailsFragment"
-    tools:showIn="@layout/activity_journey_details">
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:map="http://schemas.android.com/apk/res-auto"
+             tools:context="uni.tighearnan.routepicker.JourneyDetailsFragment"
+             tools:showIn="@layout/activity_journey_details">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -96,12 +97,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <android.support.v7.widget.AppCompatImageView
+        <!--<android.support.v7.widget.AppCompatImageView
             android:id="@+id/image_view_testBarcode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="centerInside"
-            android:visibility="gone"/>
+            android:visibility="gone"/>-->
+
+        <FrameLayout
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/map_view_route"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                map:cameraZoom="8"
+                map:liteMode="true"
+                map:mapType="normal"/>
+        </FrameLayout>
+
+
 
     </LinearLayout>
 

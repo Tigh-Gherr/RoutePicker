@@ -2,7 +2,8 @@ package uni.tighearnan.routepicker;
 
 
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
@@ -15,12 +16,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.Random;
 
 
@@ -75,27 +80,67 @@ public class JourneyDetailsFragment extends Fragment {
             }
         });
 
-        mTestBarcodeImageView = (AppCompatImageView) v.findViewById(R.id.image_view_testBarcode);
+//        mTestBarcodeImageView = (AppCompatImageView) v.findViewById(R.id.image_view_testBarcode);
+
+        MapView routeMap = (MapView) v.findViewById(R.id.map_view_route);
+        routeMap.onCreate(savedInstanceState);
+        routeMap.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                try {
+                    LatLng from = addMarker(googleMap, getStringIntent("FROM"));
+                    LatLng to = addMarker(googleMap, getStringIntent("TO"));
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(midpoint(from, to)));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         setupJourneyDetails();
 
 //        generateBarcodeZxing();
 
-        DisplayMetrics metrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+//        DisplayMetrics metrics = new DisplayMetrics();
+//        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
 //        int width = metrics.widthPixels - ((metrics.widthPixels / 16) * 2);
 
-        mTestBarcodeImageView.setImageBitmap(BarcodeGenerator.generateBarcodeBitmap("012345678901",
-                BarcodeFormat.ITF, metrics.widthPixels, 400));
+//        mTestBarcodeImageView.setImageBitmap(BarcodeGenerator.generateBarcodeBitmap("012345678901",
+//                BarcodeFormat.ITF, metrics.widthPixels, 400));
         return v;
     }
 
-    public void toggleBarcode() {
+    private LatLng midpoint(LatLng from, LatLng to) {
+        double totalLat = from.latitude + to.latitude;
+        double totalLong = from.longitude + to.longitude;
+
+        return new LatLng(totalLat / 2, totalLong / 2);
+    }
+
+    private LatLng addMarker(GoogleMap googleMap, String place) throws IOException {
+        Geocoder geocoder = new Geocoder(getActivity());
+        List<Address> addresses;
+        String search = place + " UK";
+        addresses = geocoder.getFromLocationName(search, 1);
+//        Toast.makeText(getActivity(), search, Toast.LENGTH_SHORT).show();
+        LatLng location = null;
+        if(addresses.size() > 0) {
+//            Toast.makeText(getActivity(), addresses.get(0).getFeatureName(), Toast.LENGTH_SHORT).show();
+            location = new LatLng(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
+            googleMap.addMarker(new MarkerOptions().position(location));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+        }
+
+        return location;
+    }
+
+/*    public void toggleBarcode() {
         boolean isVisible = mTestBarcodeImageView.getVisibility() == View.VISIBLE;
 
         mTestBarcodeImageView.setVisibility(isVisible ? View.GONE : View.VISIBLE);
-    }
+    }*/
 
     private void setupJourneyDetails() {
         String from = getStringIntent("FROM");
