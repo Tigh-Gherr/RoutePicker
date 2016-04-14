@@ -88,6 +88,7 @@ public class JourneyDetailsFragment extends Fragment {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 try {
+                    // TODO: 14/04/16 Dynamic zoom updates.
                     LatLng from = addMarker(googleMap, getStringIntent("FROM"));
                     LatLng to = addMarker(googleMap, getStringIntent("TO"));
                     googleMap.moveCamera(CameraUpdateFactory.newLatLng(midpoint(from, to)));
