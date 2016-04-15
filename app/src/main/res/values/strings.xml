@@ -25,10 +25,14 @@
     <string name="journey_detail_from">From: %s</string>
     <string name="journey_detail_to">To: %s</string>
     <string name="journey_detail_cost">Cost: £%s</string>
+
+    <string name="ticket_location">%s</string>
+
     <string name="activity_title_journey_details">Journey Details</string>
     <string name="activity_title_journey_planner">Journey Planner</string>
     <string name="payment_full_name">Full name (as shown on card):</string>
     <string name="activity_title_confirm_and_pay">Confirm and Pay</string>
+    <string name="instruction_ticket">Present this ticket to the driver.</string>
 
     <string-array name="card_types">
         <item>Visa</item>

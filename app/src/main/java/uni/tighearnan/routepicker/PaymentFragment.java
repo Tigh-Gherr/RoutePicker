@@ -223,7 +223,7 @@ public class PaymentFragment extends Fragment {
         } else {
             // TODO: Add barcode page.
             // TODO: Display success message.
-            new AlertDialog.Builder(getActivity())
+            /*new AlertDialog.Builder(getActivity())
                     .setTitle("Success!")
                     .setMessage("All information entered correctly.")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -231,7 +231,16 @@ public class PaymentFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                         }
-                    }).show();
+                    }).show();*/
+
+            Intent sender = getActivity().getIntent();
+
+            Intent i = new Intent(getActivity(), TicketActivity.class);
+            i.putExtra("FROM", sender.getStringExtra("FROM"));
+            i.putExtra("TO", sender.getStringExtra("TO"));
+            i.putExtra("RETURN", sender.getBooleanExtra("RETURN", false));
+
+            startActivity(i);
         }
     }
 

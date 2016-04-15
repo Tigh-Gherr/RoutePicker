@@ -10,7 +10,6 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +56,7 @@ public class JourneyDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_journey_details, container, false);
+        final View v = inflater.inflate(R.layout.fragment_journey_details, container, false);
 
         mFromTextView = (AppCompatTextView) v.findViewById(R.id.text_view_from);
         mToTextView = (AppCompatTextView) v.findViewById(R.id.text_view_to);
@@ -83,24 +82,8 @@ public class JourneyDetailsFragment extends Fragment {
 
 //        mTestBarcodeImageView = (AppCompatImageView) v.findViewById(R.id.image_view_testBarcode);
 
-        MapView routeMap = (MapView) v.findViewById(R.id.map_view_route);
-        routeMap.onCreate(savedInstanceState);
-        routeMap.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                try {
-                    // TODO: 14/04/16 Dynamic zoom updates.
-                    LatLng from = addMarker(googleMap, getStringIntent("FROM"));
-                    LatLng to = addMarker(googleMap, getStringIntent("TO"));
-                    LatLngBounds bounds = new LatLngBounds.Builder().include(from).include(to).build();
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
-//                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(midpoint(from, to)));
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+//        final DisplayMetrics metrics = new DisplayMetrics();
+//        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
         setupJourneyDetails();
 
@@ -114,6 +97,31 @@ public class JourneyDetailsFragment extends Fragment {
 //        mTestBarcodeImageView.setImageBitmap(BarcodeGenerator.generateBarcodeBitmap("012345678901",
 //                BarcodeFormat.ITF, metrics.widthPixels, 400));
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setupMap();
+    }
+
+    private void setupMap() {
+        MapView routeMap = (MapView) getView().findViewById(R.id.map_view_route);
+        routeMap.onCreate(null);
+        routeMap.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                try {
+                    // TODO: 14/04/16 Dynamic zoom updates.
+                    LatLng from = addMarker(googleMap, getStringIntent("FROM"));
+                    LatLng to = addMarker(googleMap, getStringIntent("TO"));
+                    LatLngBounds bounds = new LatLngBounds.Builder().include(from).include(to).build();
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 5));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private LatLng midpoint(LatLng from, LatLng to) {
@@ -131,9 +139,10 @@ public class JourneyDetailsFragment extends Fragment {
 //        Toast.makeText(getActivity(), search, Toast.LENGTH_SHORT).show();
         LatLng location = null;
         if(addresses.size() > 0) {
+            Address address = addresses.get(0);
 //            Toast.makeText(getActivity(), addresses.get(0).getFeatureName(), Toast.LENGTH_SHORT).show();
-            location = new LatLng(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
-            googleMap.addMarker(new MarkerOptions().position(location));
+            location = new LatLng(address.getLatitude(), address.getLongitude());
+            googleMap.addMarker(new MarkerOptions().position(location).title(place));
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
         }
 
