@@ -43,6 +43,8 @@ public class PaymentFragment extends Fragment {
 
     private AppCompatButton mPayButton;
 
+    private Ticket mTicket;
+
     public PaymentFragment() {
         // Required empty public constructor
     }
@@ -88,16 +90,18 @@ public class PaymentFragment extends Fragment {
     private void setupInformation() {
         Intent sender = getActivity().getIntent();
 
-        String from = sender.getStringExtra("FROM");
-        String to = sender.getStringExtra("TO");
+        mTicket = TicketSingleton.get(getActivity()).getTicket();
 
-        String cost = sender.getStringExtra("COST");
-        boolean isReturn = sender.getBooleanExtra("RETURN", false);
+//        String from = sender.getStringExtra("FROM");
+//        String to = sender.getStringExtra("TO");
 
-        mFromTextView.setText(getString(R.string.journey_detail_from, from));
-        mToTextView.setText(getString(R.string.journey_detail_to, to));
-        mCostTextView.setText(getString(R.string.journey_detail_cost, cost));
-        mReturnTextView.setVisibility(isReturn ? View.VISIBLE : View.GONE);
+//        String cost = sender.getStringExtra("COST");
+//        boolean isReturn = sender.getBooleanExtra("RETURN", false);
+
+        mFromTextView.setText(getString(R.string.journey_detail_from, mTicket.getFromTitle()));
+        mToTextView.setText(getString(R.string.journey_detail_to, mTicket.getToTitle()));
+        mCostTextView.setText(getString(R.string.journey_detail_cost, mTicket.getCostRounded()));
+        mReturnTextView.setVisibility(mTicket.isReturn() ? View.VISIBLE : View.GONE);
     }
 
     private void checkBillingInfo() {
@@ -223,15 +227,6 @@ public class PaymentFragment extends Fragment {
         } else {
             // TODO: Add barcode page.
             // TODO: Display success message.
-            /*new AlertDialog.Builder(getActivity())
-                    .setTitle("Success!")
-                    .setMessage("All information entered correctly.")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    }).show();*/
 
             Intent sender = getActivity().getIntent();
 
