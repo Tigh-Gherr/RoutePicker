@@ -6,6 +6,7 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by tighearnan on 16/04/16.
@@ -50,6 +51,21 @@ public class PreviousTicketsSingleton {
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    public void addTicket(Ticket ticket) {
+        if(!mPreviousTickets.contains(ticket)) {
+            mPreviousTickets.add(0, ticket);
+        } else {
+            int index = mPreviousTickets.indexOf(ticket);
+            for(int i = index; i > 0; i--) {
+                Collections.swap(mPreviousTickets, i, i - 1);
+            }
+        }
+
+        if(mPreviousTickets.size() > 3) {
+            mPreviousTickets.remove(mPreviousTickets.size() - 1);
         }
     }
 }

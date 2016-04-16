@@ -73,17 +73,16 @@ public class TicketFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ArrayList<Ticket> previousTickets =
-                PreviousTicketsSingleton.get(getActivity()).getPreviousTickets();
+        PreviousTicketsSingleton.get(getActivity()).addTicket(mTicket);
 
-        if (!previousTickets.contains(mTicket)) {
+        /*if (!previousTickets.contains(mTicket)) {
             previousTickets.add(mTicket);
         } else {
             int index = previousTickets.indexOf(mTicket);
             if(index != 0) {
                 Collections.swap(previousTickets, index, 0);
             }
-        }
+        }*/
 
         PreviousTicketsSingleton.get(getActivity()).saveTickets();
     }

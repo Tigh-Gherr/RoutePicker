@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -13,10 +15,17 @@ import java.util.ArrayList;
  */
 public class PreviousTicketsAdapter extends RecyclerView.Adapter<PreviousTicketsAdapter.PreviousTicketsViewHolder> {
 
+    // TODO: Wire up buttons
+
     private ArrayList<Ticket> mTickets;
+    private AdapterItemSelectedListener mItemSelectedListener;
 
     public PreviousTicketsAdapter(ArrayList<Ticket> tickets) {
         mTickets = tickets;
+    }
+
+    public void setItemSelectedListener(AdapterItemSelectedListener listener) {
+        mItemSelectedListener = listener;
     }
 
     @Override
@@ -38,7 +47,7 @@ public class PreviousTicketsAdapter extends RecyclerView.Adapter<PreviousTickets
         return mTickets.size();
     }
 
-    public class PreviousTicketsViewHolder extends RecyclerView.ViewHolder {
+    public class PreviousTicketsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         AppCompatTextView mRouteName;
 
@@ -46,6 +55,14 @@ public class PreviousTicketsAdapter extends RecyclerView.Adapter<PreviousTickets
             super(itemView);
 
             mRouteName = (AppCompatTextView) itemView.findViewById(R.id.text_view_routeName);
+
+            FrameLayout layout = (FrameLayout) itemView.findViewById(R.id.frame_layout_content);
+            layout.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            mItemSelectedListener.onAdapterItemSelected(getLayoutPosition());
         }
     }
 }

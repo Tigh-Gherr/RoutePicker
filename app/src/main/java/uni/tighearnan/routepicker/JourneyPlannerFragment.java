@@ -29,7 +29,7 @@ public class JourneyPlannerFragment extends Fragment {
     private AppCompatButton mGoButton;
 
     private RecyclerView mPreviousTicketsRecyclerView;
-    private RecyclerView.Adapter mPreviousTicketsAdapter;
+    private PreviousTicketsAdapter mPreviousTicketsAdapter;
 
     private View.OnFocusChangeListener mFocusChangeListener
             = new View.OnFocusChangeListener() {
@@ -57,7 +57,7 @@ public class JourneyPlannerFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_journey_planner, container, false);
 
@@ -79,10 +79,27 @@ public class JourneyPlannerFragment extends Fragment {
 
         mPreviousTicketsRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_previousJourneys);
         mPreviousTicketsAdapter = new PreviousTicketsAdapter(PreviousTicketsSingleton.get(getActivity()).getPreviousTickets());
+
+        mPreviousTicketsAdapter.setItemSelectedListener(new AdapterItemSelectedListener() {
+            @Override
+            public void onAdapterItemSelected(int position) {
+                Ticket ticket = PreviousTicketsSingleton.get(getActivity()).getPreviousTickets().get(position);
+                CurrentTicketSingleton.get(getActivity()).setTicket(ticket);
+
+                startActivity(new Intent(getActivity(), JourneyDetailsActivity.class));
+            }
+        });
+
         mPreviousTicketsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mPreviousTicketsRecyclerView.setAdapter(mPreviousTicketsAdapter);
 
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPreviousTicketsAdapter.notifyDataSetChanged();
     }
 
     private void tryLocations() {
@@ -115,6 +132,7 @@ public class JourneyPlannerFragment extends Fragment {
             Intent i = new Intent(getActivity(), JourneyDetailsActivity.class);
             i.putExtra("FROM",from);
             i.putExtra("TO", to);
+            i.putExtra("NEW", true);
 
             startActivity(i);
         }

@@ -24,6 +24,7 @@ public class Ticket {
     private static final String JSON_FROM_TITLE = "FROM";
     private static final String JSON_TO_TITLE = "TO";
     private static final String JSON_COST = "COST";
+    private static final String JSON_RETURN = "RETURN";
     private static final String JSON_FROM_LAT = "FROMLAT";
     private static final String JSON_FROM_LNG = "FROMLNG";
     private static final String JSON_TO_LAT = "TOLAT";
@@ -55,6 +56,11 @@ public class Ticket {
         mFromTitle = ticket.getString(JSON_FROM_TITLE);
         mToTitle = ticket.getString(JSON_TO_TITLE);
         mCost = ticket.getDouble(JSON_COST);
+        if(ticket.has(JSON_RETURN)) {
+            mReturn = ticket.getBoolean(JSON_RETURN);
+        } else {
+            mReturn = false;
+        }
 
         mApplicationContext = applicationContext;
 
@@ -149,6 +155,7 @@ public class Ticket {
         json.put(JSON_FROM_TITLE, mFromTitle);
         json.put(JSON_TO_TITLE, mToTitle);
         json.put(JSON_COST, mCost);
+        json.put(JSON_RETURN, mReturn);
 
         json.put(JSON_FROM_LAT, mFromLatLng.latitude);
         json.put(JSON_FROM_LNG, mFromLatLng.longitude);

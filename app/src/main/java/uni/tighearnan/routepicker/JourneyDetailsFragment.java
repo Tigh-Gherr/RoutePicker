@@ -81,9 +81,26 @@ public class JourneyDetailsFragment extends Fragment {
             }
         });
 
-        setupJourneyDetails();
+        if (getActivity().getIntent().getBooleanExtra("NEW", false)) {
+            setupJourneyDetails();
+        } else {
+            mTicket = CurrentTicketSingleton.get(getActivity()).getTicket();
+            setupFromPreviousTicket();
+        }
 
         return v;
+    }
+
+    private void setupFromPreviousTicket() {
+        String from = mTicket.getFromTitle();
+        String to = mTicket.getToTitle();
+
+        mFromTextView.setText(from);
+        mToTextView.setText(to);
+
+        mReturnSwitch.setChecked(mTicket.isReturn());
+
+        updateCost();
     }
 
     @Override
