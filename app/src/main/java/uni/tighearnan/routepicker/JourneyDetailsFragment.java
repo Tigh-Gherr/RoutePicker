@@ -151,7 +151,7 @@ public class JourneyDetailsFragment extends Fragment {
 
 
     private void proceedToPayment() {
-        TicketSingleton.get(getActivity()).setTicket(mTicket);
+        CurrentTicketSingleton.get(getActivity()).setTicket(mTicket);
         startActivity(new Intent(getActivity(), PaymentActivity.class));
     }
 }

@@ -1,12 +1,9 @@
 package uni.tighearnan.routepicker;
 
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
@@ -15,10 +12,7 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class PaymentFragment extends Fragment {
@@ -90,7 +84,7 @@ public class PaymentFragment extends Fragment {
     private void setupInformation() {
         Intent sender = getActivity().getIntent();
 
-        mTicket = TicketSingleton.get(getActivity()).getTicket();
+        mTicket = CurrentTicketSingleton.get(getActivity()).getTicket();
 
 //        String from = sender.getStringExtra("FROM");
 //        String to = sender.getStringExtra("TO");

@@ -8,6 +8,9 @@ import android.os.Parcelable;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.DecimalFormat;
@@ -17,6 +20,14 @@ import java.util.List;
  * Created by tighearnan on 16/04/16.
  */
 public class Ticket {
+
+    private static final String JSON_FROM_TITLE = "FROM";
+    private static final String JSON_TO_TITLE = "TO";
+    private static final String JSON_COST = "COST";
+    private static final String JSON_FROM_LAT = "FROMLAT";
+    private static final String JSON_FROM_LNG = "FROMLNG";
+    private static final String JSON_TO_LAT = "TOLAT";
+    private static final String JSON_TO_LNG = "TOLNG";
 
     private String mFromTitle;
     private String mToTitle;
@@ -38,6 +49,16 @@ public class Ticket {
         mToTitle = to;
 
         mApplicationContext = applicationContext;
+    }
+
+    public Ticket(JSONObject ticket, Context applicationContext) throws JSONException {
+        mFromTitle = ticket.getString(JSON_FROM_TITLE);
+        mToTitle = ticket.getString(JSON_TO_TITLE);
+        mCost = ticket.getDouble(JSON_COST);
+
+        mApplicationContext = applicationContext;
+
+        setAddresses();
     }
 
     public boolean setAddresses() {
@@ -121,4 +142,21 @@ public class Ticket {
     public void setCost(double cost) {
         mCost = cost;
     }
+
+    public JSONObject toJson() throws JSONException {
+        JSONObject json = new JSONObject();
+
+        json.put(JSON_FROM_TITLE, mFromTitle);
+        json.put(JSON_TO_TITLE, mToTitle);
+        json.put(JSON_COST, mCost);
+
+        json.put(JSON_FROM_LAT, mFromLatLng.latitude);
+        json.put(JSON_FROM_LNG, mFromLatLng.longitude);
+
+        json.put(JSON_TO_LAT, mToLatLng.latitude);
+        json.put(JSON_TO_LNG, mToLatLng.longitude);
+
+        return json;
+    }
+
 }

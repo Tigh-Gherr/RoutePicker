@@ -2,6 +2,7 @@ package uni.tighearnan.routepicker;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
@@ -11,6 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.zxing.BarcodeFormat;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 
 /**
@@ -33,14 +40,9 @@ public class TicketFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_ticket, container, false);
 
-//        String from = getStringIntent("FROM");
-//        String to = getStringIntent("TO");
-//        boolean isReturn = getActivity().getIntent().getBooleanExtra("RETURN", false);
-
-        mTicket = TicketSingleton.get(getActivity()).getTicket();
+        mTicket = CurrentTicketSingleton.get(getActivity()).getTicket();
 
         mFromTextView = (AppCompatTextView) v.findViewById(R.id.text_view_from);
         mFromTextView.setText(mTicket.getFromTitle());
@@ -67,8 +69,23 @@ public class TicketFragment extends Fragment {
         return v;
     }
 
-    private String getStringIntent(String key) {
-        return getActivity().getIntent().getStringExtra(key);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ArrayList<Ticket> previousTickets =
+                PreviousTicketsSingleton.get(getActivity()).getPreviousTickets();
+
+        if (!previousTickets.contains(mTicket)) {
+            previousTickets.add(mTicket);
+        } else {
+            int index = previousTickets.indexOf(mTicket);
+            if(index != 0) {
+                Collections.swap(previousTickets, index, 0);
+            }
+        }
+
+        PreviousTicketsSingleton.get(getActivity()).saveTickets();
     }
 
     private String hash(String from, String to, boolean isReturn) {

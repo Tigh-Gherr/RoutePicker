@@ -9,6 +9,8 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,9 @@ public class JourneyPlannerFragment extends Fragment {
     private AppCompatImageButton mFromImageButton;
     private AppCompatImageButton mToImageButton;
     private AppCompatButton mGoButton;
+
+    private RecyclerView mPreviousTicketsRecyclerView;
+    private RecyclerView.Adapter mPreviousTicketsAdapter;
 
     private View.OnFocusChangeListener mFocusChangeListener
             = new View.OnFocusChangeListener() {
@@ -71,6 +76,11 @@ public class JourneyPlannerFragment extends Fragment {
                 tryLocations();
             }
         });
+
+        mPreviousTicketsRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_previousJourneys);
+        mPreviousTicketsAdapter = new PreviousTicketsAdapter(PreviousTicketsSingleton.get(getActivity()).getPreviousTickets());
+        mPreviousTicketsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mPreviousTicketsRecyclerView.setAdapter(mPreviousTicketsAdapter);
 
         return v;
     }
