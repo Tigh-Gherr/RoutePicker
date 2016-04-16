@@ -23,6 +23,8 @@ public class TicketFragment extends Fragment {
     private AppCompatImageView mBarcodeImageView;
     private AppCompatTextView mBarcodeTextView;
 
+    private Ticket mTicket;
+
     public TicketFragment() {
         // Required empty public constructor
     }
@@ -34,20 +36,22 @@ public class TicketFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_ticket, container, false);
 
-        String from = getStringIntent("FROM");
-        String to = getStringIntent("TO");
-        boolean isReturn = getActivity().getIntent().getBooleanExtra("RETURN", false);
+//        String from = getStringIntent("FROM");
+//        String to = getStringIntent("TO");
+//        boolean isReturn = getActivity().getIntent().getBooleanExtra("RETURN", false);
+
+        mTicket = TicketSingleton.get(getActivity()).getTicket();
 
         mFromTextView = (AppCompatTextView) v.findViewById(R.id.text_view_from);
-        mFromTextView.setText(from);
+        mFromTextView.setText(mTicket.getFromTitle());
 
         mToTextView = (AppCompatTextView) v.findViewById(R.id.text_view_to);
-        mToTextView.setText(to);
+        mToTextView.setText(mTicket.getToTitle());
 
         DisplayMetrics metrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-        String hash = hash(from, to, isReturn);
+        String hash = hash(mTicket.getFromTitle(), mTicket.getToTitle(), mTicket.isReturn());
 
         mBarcodeImageView = (AppCompatImageView) v.findViewById(R.id.image_view_barcode);
         mBarcodeImageView.setImageBitmap(BarcodeGenerator.generateBarcodeBitmap(

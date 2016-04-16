@@ -2,12 +2,9 @@ package uni.tighearnan.routepicker;
 
 
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
@@ -20,12 +17,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
-import java.text.DecimalFormat;
-import java.util.List;
 import java.util.Random;
 
 
@@ -153,22 +146,12 @@ public class JourneyDetailsFragment extends Fragment {
     }
 
     private void updateCost() {
-        DecimalFormat df = new DecimalFormat("0.00");
-        mCostTextView.setText(getString(R.string.journey_detail_cost, df.format(mTicket.getCost())));
+        mCostTextView.setText(getString(R.string.journey_detail_cost, mTicket.getCostRounded()));
     }
 
 
     private void proceedToPayment() {
-        Intent i = new Intent(getActivity(), PaymentActivity.class);
-        DecimalFormat df = new DecimalFormat("0.00");
-
-        i.putExtra("FROM", mTicket.getFromTitle());
-        i.putExtra("TO", mTicket.getToTitle());
-        i.putExtra("COST", df.format(mTicket.getCost()));
-        i.putExtra("RETURN", mTicket.isReturn());
-
         TicketSingleton.get(getActivity()).setTicket(mTicket);
-
-        startActivity(i);
+        startActivity(new Intent(getActivity(), PaymentActivity.class));
     }
 }
