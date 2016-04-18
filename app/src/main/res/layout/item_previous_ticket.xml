@@ -12,26 +12,42 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/text_view_routeName"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|center"
-            android:text="Route Name"/>
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/text_view_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/journey_detail_from"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/text_view_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/journey_detail_to"/>
+        </LinearLayout>
+
+
+
+        <!--<android.support.v7.widget.AppCompatTextView-->
+            <!--android:id="@+id/text_view_routeName"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="left|center"-->
+            <!--android:text="Route Name"/>-->
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/text_view_bookAgain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
+            android:layout_gravity="right|center"
             android:text="Book Again >"/>
 
     </FrameLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_gravity="bottom"
-        android:background="@color/md_green_200"/>
+    <include layout="@layout/recycler_view_separator" />
 
 </FrameLayout>

@@ -39,7 +39,9 @@ public class PreviousTicketsAdapter extends RecyclerView.Adapter<PreviousTickets
     @Override
     public void onBindViewHolder(PreviousTicketsViewHolder holder, int position) {
         Ticket current = mTickets.get(position);
-        holder.mRouteName.setText(current.getFromTitle() + " - " + current.getToTitle());
+//        holder.mRouteName.setText(current.getFromTitle() + " - " + current.getToTitle());
+        holder.mRouteFrom.setText("From: " + current.getFromTitle());
+        holder.mRouteTo.setText("To: " + current.getToTitle());
     }
 
     @Override
@@ -49,12 +51,16 @@ public class PreviousTicketsAdapter extends RecyclerView.Adapter<PreviousTickets
 
     public class PreviousTicketsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        AppCompatTextView mRouteName;
+//        AppCompatTextView mRouteName;
+        AppCompatTextView mRouteFrom;
+        AppCompatTextView mRouteTo;
 
         public PreviousTicketsViewHolder(View itemView) {
             super(itemView);
 
-            mRouteName = (AppCompatTextView) itemView.findViewById(R.id.text_view_routeName);
+//            mRouteName = (AppCompatTextView) itemView.findViewById(R.id.text_view_routeName);
+            mRouteFrom = (AppCompatTextView) itemView.findViewById(R.id.text_view_from);
+            mRouteTo = (AppCompatTextView) itemView.findViewById(R.id.text_view_to);
 
             FrameLayout layout = (FrameLayout) itemView.findViewById(R.id.frame_layout_content);
             layout.setOnClickListener(this);

@@ -64,7 +64,7 @@ public class PreviousTicketsSingleton {
             }
         }
 
-        if(mPreviousTickets.size() > 3) {
+        if(mPreviousTickets.size() > 4) {
             mPreviousTickets.remove(mPreviousTickets.size() - 1);
         }
     }

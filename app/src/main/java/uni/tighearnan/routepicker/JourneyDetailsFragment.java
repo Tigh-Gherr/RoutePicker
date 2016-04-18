@@ -3,6 +3,7 @@ package uni.tighearnan.routepicker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
@@ -114,15 +115,20 @@ public class JourneyDetailsFragment extends Fragment {
         routeMap.onCreate(null);
         routeMap.getMapAsync(new OnMapReadyCallback() {
             @Override
-            public void onMapReady(GoogleMap googleMap) {
+            public void onMapReady(final GoogleMap googleMap) {
                 // TODO: 14/04/16 Dynamic zoom updates.
 
                 if (mTicket.setAddresses()) {
                     googleMap.addMarker(new MarkerOptions().title(mTicket.getFromTitle()).position(mTicket.getFromLatLng()));
                     googleMap.addMarker(new MarkerOptions().title(mTicket.getToTitle()).position(mTicket.getToLatLng()));
 
-                    googleMap.moveCamera(CameraUpdateFactory
-                            .newLatLngBounds(mTicket.createLatLngBounds(), 5));
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            googleMap.moveCamera(CameraUpdateFactory
+                                    .newLatLngBounds(mTicket.createLatLngBounds(), 5));
+                        }
+                    }, 100);
                 }
 
             }

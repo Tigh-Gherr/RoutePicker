@@ -1,9 +1,11 @@
 package uni.tighearnan.routepicker;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
@@ -56,24 +58,40 @@ public class SignInFragment extends Fragment {
 
         View errorView = null;
 
-        if(!isValidEmail(email)) {
+        if (!isValidEmail(email)) {
             mEmailEditText.setError("Email is invalid.");
             errorView = mEmailEditText;
             shouldCancel = true;
         }
 
-        if(!isValidPassword(password)) {
+        if (!isValidPassword(password)) {
             mPasswordEditText.setError("Password is too short.");
-            if(errorView == null) {
+            if (errorView == null) {
                 errorView = mPasswordEditText;
                 shouldCancel = true;
             }
         }
 
-        if(shouldCancel) {
+        if (!shouldCancel && !(email.equals("joebloggs@email.com") && password.equals("joespassword"))) {
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("Login Error")
+                    .setMessage("Email or password is incorrect.")
+                    .setPositiveButton("RETRY", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).show();
+
+            errorView = mEmailEditText;
+            shouldCancel = true;
+        }
+
+        if (shouldCancel) {
             errorView.requestFocus();
         } else {
             startActivity(new Intent(getActivity(), JourneyPlannerActivity.class));
+            getActivity().finish();
         }
     }
 

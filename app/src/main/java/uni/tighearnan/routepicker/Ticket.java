@@ -56,11 +56,7 @@ public class Ticket {
         mFromTitle = ticket.getString(JSON_FROM_TITLE);
         mToTitle = ticket.getString(JSON_TO_TITLE);
         mCost = ticket.getDouble(JSON_COST);
-        if(ticket.has(JSON_RETURN)) {
-            mReturn = ticket.getBoolean(JSON_RETURN);
-        } else {
-            mReturn = false;
-        }
+        mReturn = ticket.has(JSON_RETURN) && ticket.getBoolean(JSON_RETURN);
 
         mApplicationContext = applicationContext;
 
@@ -109,7 +105,7 @@ public class Ticket {
     }
 
     public LatLngBounds createLatLngBounds() {
-        return new LatLngBounds.Builder().include(mFromLatLng).include(mToLatLng).build();
+        return new LatLngBounds.Builder().include(getFromLatLng()).include(getToLatLng()).build();
     }
 
     public String getFromTitle() {

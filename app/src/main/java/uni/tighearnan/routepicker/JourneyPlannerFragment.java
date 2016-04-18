@@ -14,7 +14,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 
 /**
@@ -24,28 +23,44 @@ public class JourneyPlannerFragment extends Fragment {
 
     private AppCompatEditText mFromEditText;
     private AppCompatEditText mToEditText;
-    private AppCompatImageButton mFromImageButton;
-    private AppCompatImageButton mToImageButton;
+    private AppCompatImageButton mClearFromImageButton;
+    private AppCompatImageButton mClearToImageButton;
     private AppCompatButton mGoButton;
 
     private RecyclerView mPreviousTicketsRecyclerView;
     private PreviousTicketsAdapter mPreviousTicketsAdapter;
 
+    private View.OnClickListener mClearListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            clearText(getCoupledEditText(v));
+        }
+    };
+
+    private AppCompatEditText getCoupledEditText(View v) {
+        return v == mClearFromImageButton ? mFromEditText : mToEditText;
+    }
+
+    private void clearText(AppCompatEditText editText) {
+        editText.setText("");
+        editText.requestFocus();
+    }
+
     private View.OnFocusChangeListener mFocusChangeListener
             = new View.OnFocusChangeListener() {
         @Override
         public void onFocusChange(View v, boolean hasFocus) {
-            AppCompatImageButton search = null;
-            if(v == mFromEditText) {
-                search = mFromImageButton;
-            } else if (v == mToEditText){
-                search = mToImageButton;
+            AppCompatImageButton button = null;
+            if (v == mFromEditText) {
+                button = mClearFromImageButton;
+            } else if (v == mToEditText) {
+                button = mClearToImageButton;
             }
 
-            if(hasFocus) {
-                DrawableCompat.setTint(search.getDrawable(), ContextCompat.getColor(getActivity(), R.color.colorControlActivated));
+            if (hasFocus) {
+                DrawableCompat.setTint(button.getDrawable(), ContextCompat.getColor(getActivity(), R.color.colorControlActivated));
             } else {
-                DrawableCompat.setTint(search.getDrawable(), ContextCompat.getColor(getActivity(), R.color.md_white_1000));
+                DrawableCompat.setTint(button.getDrawable(), ContextCompat.getColor(getActivity(), R.color.md_white_1000));
             }
         }
     };
@@ -66,8 +81,10 @@ public class JourneyPlannerFragment extends Fragment {
         mToEditText = (AppCompatEditText) v.findViewById(R.id.edit_text_travellingTo);
         mToEditText.setOnFocusChangeListener(mFocusChangeListener);
 
-        mFromImageButton = (AppCompatImageButton) v.findViewById(R.id.image_button_travellingFrom);
-        mToImageButton = (AppCompatImageButton) v.findViewById(R.id.image_button_travellingTo);
+        mClearFromImageButton = (AppCompatImageButton) v.findViewById(R.id.image_button_clearTravellingFrom);
+        mClearFromImageButton.setOnClickListener(mClearListener);
+        mClearToImageButton = (AppCompatImageButton) v.findViewById(R.id.image_button_clearTravellingTo);
+        mClearToImageButton.setOnClickListener(mClearListener);
 
         mGoButton = (AppCompatButton) v.findViewById(R.id.button_go);
         mGoButton.setOnClickListener(new View.OnClickListener() {
@@ -112,15 +129,15 @@ public class JourneyPlannerFragment extends Fragment {
 
         View errorView = null;
 
-        if(!isValid(mFromEditText)) {
+        if (!isValid(mFromEditText)) {
             mFromEditText.setError("\"" + from + "\" is not a valid location.");
             errorView = mFromEditText;
             cancel = true;
         }
 
-        if(!isValid(mToEditText)) {
+        if (!isValid(mToEditText)) {
             mToEditText.setError("\"" + to + "\" is not a valid location.");
-            if(errorView == null) {
+            if (errorView == null) {
                 errorView = mToEditText;
             }
             cancel = true;
@@ -130,7 +147,7 @@ public class JourneyPlannerFragment extends Fragment {
             errorView.requestFocus();
         } else {
             Intent i = new Intent(getActivity(), JourneyDetailsActivity.class);
-            i.putExtra("FROM",from);
+            i.putExtra("FROM", from);
             i.putExtra("TO", to);
             i.putExtra("NEW", true);
 
