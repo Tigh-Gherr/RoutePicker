@@ -11,6 +11,8 @@ import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 
 /**
@@ -21,11 +23,11 @@ public class SignInFragment extends Fragment {
     private AppCompatEditText mEmailEditText;
     private AppCompatEditText mPasswordEditText;
     private AppCompatButton mSignInButton;
+    private ProgressBar mSignInProgressBar;
 
     public SignInFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +45,8 @@ public class SignInFragment extends Fragment {
                 signIn();
             }
         });
+
+        mSignInProgressBar = (ProgressBar) v.findViewById(R.id.progress_bar_signIn);
 
         return v;
     }
@@ -72,26 +76,35 @@ public class SignInFragment extends Fragment {
             }
         }
 
-        if (!shouldCancel && !(email.equals("joebloggs@email.com") && password.equals("joespassword"))) {
-            new AlertDialog.Builder(getActivity())
-                    .setTitle("Login Error")
-                    .setMessage("Email or password is incorrect.")
-                    .setPositiveButton("RETRY", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    }).show();
-
-            errorView = mEmailEditText;
-            shouldCancel = true;
-        }
-
         if (shouldCancel) {
             errorView.requestFocus();
         } else {
-            startActivity(new Intent(getActivity(), JourneyPlannerActivity.class));
-            getActivity().finish();
+            mSignInProgressBar.setVisibility(View.VISIBLE);
+
+            LoginASyncTask loginASyncTask = new LoginASyncTask();
+            loginASyncTask.setResultListener(new LoginResultListener() {
+                @Override
+                public void onLoginSuccess() {
+                    startActivity(new Intent(getActivity(), JourneyPlannerActivity.class));
+                    getActivity().finish();
+                }
+
+                @Override
+                public void onLoginFailed() {
+                    mSignInProgressBar.setVisibility(View.INVISIBLE);
+
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle("Login Error")
+                            .setMessage("Email or password is incorrect.")
+                            .setPositiveButton("RETRY", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            }).show();
+                }
+            });
+            loginASyncTask.execute(new LoginAuth(getActivity(), email.toLowerCase(), password));
         }
     }
 
