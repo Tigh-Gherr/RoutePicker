@@ -9,9 +9,14 @@ public class User {
     private String mEmail;
     private String mFirstName;
     private String mSurnameName;
+    private CreditCard mCreditCard;
 
-    public User(String email) {
+    public User(int id, String email, String firstName, String surnameName, CreditCard creditCard) {
+        mId = id;
         mEmail = email;
+        mFirstName = firstName;
+        mSurnameName = surnameName;
+        mCreditCard = creditCard;
     }
 
     public void setId(int id) {
@@ -36,5 +41,13 @@ public class User {
 
     public String getSurnameName() {
         return mSurnameName;
+    }
+
+    public CreditCard getCreditCard() {
+        return mCreditCard;
+    }
+
+    public void setCreditCard(CreditCard creditCard) {
+        mCreditCard = creditCard;
     }
 }

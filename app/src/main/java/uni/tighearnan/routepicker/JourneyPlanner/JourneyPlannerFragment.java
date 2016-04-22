@@ -1,4 +1,4 @@
-package uni.tighearnan.routepicker;
+package uni.tighearnan.routepicker.JourneyPlanner;
 
 
 import android.content.Intent;
@@ -14,6 +14,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import uni.tighearnan.routepicker.AdapterItemSelectedListener;
+import uni.tighearnan.routepicker.CurrentTicketSingleton;
+import uni.tighearnan.routepicker.JourneyDetails.JourneyDetailsActivity;
+import uni.tighearnan.routepicker.PreviousTicketsAdapter;
+import uni.tighearnan.routepicker.PreviousTicketsSingleton;
+import uni.tighearnan.routepicker.R;
+import uni.tighearnan.routepicker.Ticket.Ticket;
 
 
 /**

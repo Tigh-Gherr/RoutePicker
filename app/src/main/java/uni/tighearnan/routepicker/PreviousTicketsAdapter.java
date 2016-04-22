@@ -6,9 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import uni.tighearnan.routepicker.Ticket.Ticket;
 
 /**
  * Created by tighearnan on 16/04/16.

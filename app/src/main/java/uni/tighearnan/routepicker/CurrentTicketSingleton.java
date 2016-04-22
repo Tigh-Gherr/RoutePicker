@@ -2,6 +2,8 @@ package uni.tighearnan.routepicker;
 
 import android.content.Context;
 
+import uni.tighearnan.routepicker.Ticket.Ticket;
+
 /**
  * Created by tighearnan on 16/04/16.
  */

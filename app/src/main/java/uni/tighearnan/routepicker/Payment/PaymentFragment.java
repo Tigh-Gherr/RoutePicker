@@ -1,4 +1,4 @@
-package uni.tighearnan.routepicker;
+package uni.tighearnan.routepicker.Payment;
 
 
 import android.content.Intent;
@@ -14,6 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.Date;
+
+import uni.tighearnan.routepicker.CreditCard;
+import uni.tighearnan.routepicker.CurrentTicketSingleton;
+import uni.tighearnan.routepicker.R;
+import uni.tighearnan.routepicker.Ticket.Ticket;
+import uni.tighearnan.routepicker.Ticket.TicketActivity;
+import uni.tighearnan.routepicker.User;
+import uni.tighearnan.routepicker.UserSingleton;
 
 public class PaymentFragment extends Fragment {
 
@@ -38,6 +46,7 @@ public class PaymentFragment extends Fragment {
     private AppCompatButton mPayButton;
 
     private Ticket mTicket;
+    private User mUser;
 
     public PaymentFragment() {
         // Required empty public constructor
@@ -85,6 +94,7 @@ public class PaymentFragment extends Fragment {
         Intent sender = getActivity().getIntent();
 
         mTicket = CurrentTicketSingleton.get(getActivity()).getTicket();
+        mUser = UserSingleton.get(getActivity()).getUser();
 
 //        String from = sender.getStringExtra("FROM");
 //        String to = sender.getStringExtra("TO");
@@ -96,6 +106,23 @@ public class PaymentFragment extends Fragment {
         mToTextView.setText(getString(R.string.journey_detail_to, mTicket.getToTitle()));
         mCostTextView.setText(getString(R.string.journey_detail_cost, mTicket.getCostRounded()));
         mReturnTextView.setVisibility(mTicket.isReturn() ? View.VISIBLE : View.GONE);
+
+        mFirstNameEditText.setText(mUser.getFirstName());
+        mSurnameEditText.setText(mUser.getSurnameName());
+
+        CreditCard creditCard = mUser.getCreditCard();
+
+        if(creditCard == null) {
+            return;
+        }
+
+        mCardNumberEditText.setText(creditCard.getNumber());
+        mCardTypeSpinner.setSelection(creditCard.getCardType());
+        mCardExpMonthEditText.setText(creditCard.getExpMonth()+"");
+        mCardExpYearEditText.setText(creditCard.getExpYear()+"");
+        mBillingAddressLine1EditText.setText(creditCard.getAddressLine1());
+        mBillingAddressLine2EditText.setText(creditCard.getAddressLine2());
+        mCardCVCNumberEditText.setText(creditCard.getCVC());
     }
 
     private void checkBillingInfo() {

@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import uni.tighearnan.routepicker.Ticket.Ticket;
+import uni.tighearnan.routepicker.Ticket.TicketIO;
+
 /**
  * Created by tighearnan on 16/04/16.
  */

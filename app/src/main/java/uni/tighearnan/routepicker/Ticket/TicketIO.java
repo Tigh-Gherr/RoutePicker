@@ -1,4 +1,4 @@
-package uni.tighearnan.routepicker;
+package uni.tighearnan.routepicker.Ticket;
 
 import android.content.Context;
 
@@ -8,7 +8,6 @@ import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.IOError;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;

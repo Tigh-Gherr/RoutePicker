@@ -1,4 +1,4 @@
-package uni.tighearnan.routepicker;
+package uni.tighearnan.routepicker.JourneyDetails;
 
 
 import android.content.Intent;
@@ -21,6 +21,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Random;
+
+import uni.tighearnan.routepicker.CurrentTicketSingleton;
+import uni.tighearnan.routepicker.Payment.PaymentActivity;
+import uni.tighearnan.routepicker.R;
+import uni.tighearnan.routepicker.Ticket.Ticket;
 
 
 /**

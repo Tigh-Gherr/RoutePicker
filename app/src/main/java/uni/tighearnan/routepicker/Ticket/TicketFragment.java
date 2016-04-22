@@ -1,4 +1,4 @@
-package uni.tighearnan.routepicker;
+package uni.tighearnan.routepicker.Ticket;
 
 
 import android.os.Bundle;
@@ -13,11 +13,9 @@ import android.view.ViewGroup;
 
 import com.google.zxing.BarcodeFormat;
 
-import org.json.JSONException;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
+import uni.tighearnan.routepicker.CurrentTicketSingleton;
+import uni.tighearnan.routepicker.PreviousTicketsSingleton;
+import uni.tighearnan.routepicker.R;
 
 
 /**

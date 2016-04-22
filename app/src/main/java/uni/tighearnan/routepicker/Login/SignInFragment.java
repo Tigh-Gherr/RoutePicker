@@ -1,4 +1,4 @@
-package uni.tighearnan.routepicker;
+package uni.tighearnan.routepicker.Login;
 
 
 import android.content.DialogInterface;
@@ -12,7 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+
+import uni.tighearnan.routepicker.JourneyPlanner.JourneyPlannerActivity;
+import uni.tighearnan.routepicker.R;
+import uni.tighearnan.routepicker.User;
+import uni.tighearnan.routepicker.UserSingleton;
 
 
 /**
@@ -79,12 +83,14 @@ public class SignInFragment extends Fragment {
         if (shouldCancel) {
             errorView.requestFocus();
         } else {
+            // TODO: Network checks.
             mSignInProgressBar.setVisibility(View.VISIBLE);
 
             LoginASyncTask loginASyncTask = new LoginASyncTask();
             loginASyncTask.setResultListener(new LoginResultListener() {
                 @Override
-                public void onLoginSuccess() {
+                public void onLoginSuccess(User user) {
+                    UserSingleton.get(getActivity()).setUser(user);
                     startActivity(new Intent(getActivity(), JourneyPlannerActivity.class));
                     getActivity().finish();
                 }

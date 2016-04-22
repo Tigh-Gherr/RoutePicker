@@ -24,7 +24,7 @@
 
     <string name="previous_booking_name">%1$s - %2$s</string>
 
-    <string name="login_url">http://www.barcodetesting.co.nf/login.php?email=%1$s&amp;password=%2$s</string>
+    <string name="login_url">http://www.barcodetesting.co.nf/routePicker/login.php?email=%1$s&amp;password=%2$s</string>
 
     <string-array name="card_types">
         <item>Visa</item>

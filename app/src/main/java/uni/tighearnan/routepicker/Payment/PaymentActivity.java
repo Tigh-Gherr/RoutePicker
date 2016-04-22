@@ -1,19 +1,23 @@
-package uni.tighearnan.routepicker;
+package uni.tighearnan.routepicker.Payment;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
-public class TicketActivity extends AppCompatActivity {
+import uni.tighearnan.routepicker.R;
+
+public class PaymentActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ticket);
+        setContentView(R.layout.activity_payment);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }
