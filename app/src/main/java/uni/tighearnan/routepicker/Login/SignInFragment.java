@@ -4,14 +4,19 @@ package uni.tighearnan.routepicker.Login;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import uni.tighearnan.routepicker.JourneyPlanner.JourneyPlannerActivity;
 import uni.tighearnan.routepicker.R;
@@ -28,6 +33,8 @@ public class SignInFragment extends Fragment {
     private AppCompatEditText mPasswordEditText;
     private AppCompatButton mSignInButton;
     private ProgressBar mSignInProgressBar;
+
+    private AppCompatButton mCreateAccountButton;
 
     public SignInFragment() {
         // Required empty public constructor
@@ -52,7 +59,40 @@ public class SignInFragment extends Fragment {
 
         mSignInProgressBar = (ProgressBar) v.findViewById(R.id.progress_bar_signIn);
 
+        mCreateAccountButton = (AppCompatButton) v.findViewById(R.id.button_createAccount);
+
         return v;
+    }
+
+    @Override
+    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mPasswordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_GO) {
+                    mSignInButton.performClick();
+                }
+
+                return false;
+            }
+        });
+
+        mCreateAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateAccountDialog dialog = CreateAccountDialog.newInstance();
+                dialog.setListener(new OnUserConfirmedListener() {
+                    @Override
+                    public void onConfirmed(String name) {
+                        Snackbar.make(view, name + ", your account has been created!", Snackbar.LENGTH_SHORT)
+                                .show();
+                    }
+                });
+                dialog.show(getActivity().getSupportFragmentManager(), "NEWUSER");
+            }
+        });
     }
 
     private void signIn() {
@@ -105,9 +145,11 @@ public class SignInFragment extends Fragment {
                             .setPositiveButton("RETRY", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    mEmailEditText.requestFocus();
                                     dialog.dismiss();
                                 }
                             }).show();
+
                 }
             });
             loginASyncTask.execute(new LoginAuth(getActivity(), email.toLowerCase(), password));
