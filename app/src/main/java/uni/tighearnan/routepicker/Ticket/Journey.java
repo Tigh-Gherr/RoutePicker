@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by tighearnan on 16/04/16.
  */
-public class Ticket {
+public class Journey {
 
     private static final String JSON_FROM_TITLE = "FROM";
     private static final String JSON_TO_TITLE = "TO";
@@ -45,14 +45,14 @@ public class Ticket {
 
     private Context mApplicationContext;
 
-    public Ticket(Context applicationContext, String from, String to) {
+    public Journey(Context applicationContext, String from, String to) {
         mFromTitle = from;
         mToTitle = to;
 
-        mApplicationContext = applicationContext;
+        mApplicationContext = applicationContext.getApplicationContext();
     }
 
-    public Ticket(JSONObject ticket, Context applicationContext) throws JSONException {
+    public Journey(JSONObject ticket, Context applicationContext) throws JSONException {
         mFromTitle = ticket.getString(JSON_FROM_TITLE);
         mToTitle = ticket.getString(JSON_TO_TITLE);
         mCost = ticket.getDouble(JSON_COST);
@@ -118,6 +118,10 @@ public class Ticket {
 
     public double getCost() {
         return isReturn() ? mCost * 1.5 : mCost;
+    }
+
+    public double getBaseCost() {
+        return mCost;
     }
 
     public String getCostRounded() {

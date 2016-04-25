@@ -18,10 +18,10 @@ import android.view.ViewGroup;
 import uni.tighearnan.routepicker.AdapterItemSelectedListener;
 import uni.tighearnan.routepicker.CurrentTicketSingleton;
 import uni.tighearnan.routepicker.JourneyDetails.JourneyDetailsActivity;
-import uni.tighearnan.routepicker.PreviousTicketsAdapter;
-import uni.tighearnan.routepicker.PreviousTicketsSingleton;
+import uni.tighearnan.routepicker.PreviousJourneysSingleton;
+import uni.tighearnan.routepicker.PreviousJourneysAdapter;
 import uni.tighearnan.routepicker.R;
-import uni.tighearnan.routepicker.Ticket.Ticket;
+import uni.tighearnan.routepicker.Ticket.Journey;
 
 
 /**
@@ -35,8 +35,8 @@ public class JourneyPlannerFragment extends Fragment {
     private AppCompatImageButton mClearToImageButton;
     private AppCompatButton mGoButton;
 
-    private RecyclerView mPreviousTicketsRecyclerView;
-    private PreviousTicketsAdapter mPreviousTicketsAdapter;
+    private RecyclerView mPreviousJourneysRecyclerView;
+    private PreviousJourneysAdapter mPreviousJourneysAdapter;
 
     private View.OnClickListener mClearListener = new View.OnClickListener() {
         @Override
@@ -102,21 +102,21 @@ public class JourneyPlannerFragment extends Fragment {
             }
         });
 
-        mPreviousTicketsRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_previousJourneys);
-        mPreviousTicketsAdapter = new PreviousTicketsAdapter(PreviousTicketsSingleton.get(getActivity()).getPreviousTickets());
+        mPreviousJourneysRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_previousJourneys);
+        mPreviousJourneysAdapter = new PreviousJourneysAdapter(PreviousJourneysSingleton.get(getActivity()).getPreviousJourneys());
 
-        mPreviousTicketsAdapter.setItemSelectedListener(new AdapterItemSelectedListener() {
+        mPreviousJourneysAdapter.setItemSelectedListener(new AdapterItemSelectedListener() {
             @Override
             public void onAdapterItemSelected(int position) {
-                Ticket ticket = PreviousTicketsSingleton.get(getActivity()).getPreviousTickets().get(position);
-                CurrentTicketSingleton.get(getActivity()).setTicket(ticket);
+                Journey journey = PreviousJourneysSingleton.get(getActivity()).getPreviousJourneys().get(position);
+                CurrentTicketSingleton.get(getActivity()).setJourney(journey);
 
                 startActivity(new Intent(getActivity(), JourneyDetailsActivity.class));
             }
         });
 
-        mPreviousTicketsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mPreviousTicketsRecyclerView.setAdapter(mPreviousTicketsAdapter);
+        mPreviousJourneysRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mPreviousJourneysRecyclerView.setAdapter(mPreviousJourneysAdapter);
 
         return v;
     }
@@ -124,7 +124,7 @@ public class JourneyPlannerFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mPreviousTicketsAdapter.notifyDataSetChanged();
+        mPreviousJourneysAdapter.notifyDataSetChanged();
     }
 
     private void tryLocations() {

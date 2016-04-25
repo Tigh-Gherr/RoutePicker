@@ -23,6 +23,10 @@ public class User {
         mId = id;
     }
 
+    public int getId() {
+        return mId;
+    }
+
     public void setFirstName(String firstName) {
         mFirstName = firstName;
     }

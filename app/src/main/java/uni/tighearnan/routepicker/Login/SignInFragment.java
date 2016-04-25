@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import uni.tighearnan.routepicker.JourneyPlanner.JourneyPlannerActivity;
+import uni.tighearnan.routepicker.PreviousJourneysSingleton;
 import uni.tighearnan.routepicker.R;
 import uni.tighearnan.routepicker.User;
 import uni.tighearnan.routepicker.UserSingleton;
@@ -38,6 +39,13 @@ public class SignInFragment extends Fragment {
 
     public SignInFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        PreviousJourneysSingleton.get(getActivity()).reset();
+        UserSingleton.get(getActivity()).reset();
     }
 
     @Override
@@ -126,7 +134,7 @@ public class SignInFragment extends Fragment {
             // TODO: Network checks.
             mSignInProgressBar.setVisibility(View.VISIBLE);
 
-            LoginASyncTask loginASyncTask = new LoginASyncTask();
+            LoginASyncTask loginASyncTask = new LoginASyncTask(getActivity());
             loginASyncTask.setResultListener(new LoginResultListener() {
                 @Override
                 public void onLoginSuccess(User user) {

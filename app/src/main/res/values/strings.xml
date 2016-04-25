@@ -19,13 +19,14 @@
     <string name="activity_title_journey_planner">Journey Planner</string>
     <string name="payment_full_name">Full name (as shown on card):</string>
     <string name="activity_title_confirm_and_pay">Confirm and Pay</string>
-    <string name="instruction_ticket">Present this ticket to the driver.</string>
+    <string name="instruction_ticket">Present this journey to the driver.</string>
     <string name="activity_title_ticket">Ticket</string>
 
     <string name="previous_booking_name">%1$s - %2$s</string>
 
     <string name="login_url">http://www.barcodetesting.co.nf/routePicker/login.php?email=%1$s&amp;password=%2$s</string>
     <string name="create_account_url">http://www.barcodetesting.co.nf/routePicker/createNewUser.php?fname=%1$s&amp;sname=%2$s&amp;email=%3$s&amp;psswd=%4$s</string>
+    <string name="upload_journey_url">http://www.barcodetesting.co.nf/routePicker/addNewJourney.php?id=%1$s&amp;to=%2$s&amp;from=%3$s&amp;is_return=%4$s&amp;cost=%5$s</string>
 
     <string-array name="card_types">
         <item>Visa</item>

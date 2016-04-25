@@ -18,7 +18,7 @@ import java.util.Date;
 import uni.tighearnan.routepicker.CreditCard;
 import uni.tighearnan.routepicker.CurrentTicketSingleton;
 import uni.tighearnan.routepicker.R;
-import uni.tighearnan.routepicker.Ticket.Ticket;
+import uni.tighearnan.routepicker.Ticket.Journey;
 import uni.tighearnan.routepicker.Ticket.TicketActivity;
 import uni.tighearnan.routepicker.User;
 import uni.tighearnan.routepicker.UserSingleton;
@@ -45,7 +45,7 @@ public class PaymentFragment extends Fragment {
 
     private AppCompatButton mPayButton;
 
-    private Ticket mTicket;
+    private Journey mJourney;
     private User mUser;
 
     public PaymentFragment() {
@@ -93,7 +93,7 @@ public class PaymentFragment extends Fragment {
     private void setupInformation() {
         Intent sender = getActivity().getIntent();
 
-        mTicket = CurrentTicketSingleton.get(getActivity()).getTicket();
+        mJourney = CurrentTicketSingleton.get(getActivity()).getJourney();
         mUser = UserSingleton.get(getActivity()).getUser();
 
 //        String from = sender.getStringExtra("FROM");
@@ -102,10 +102,10 @@ public class PaymentFragment extends Fragment {
 //        String cost = sender.getStringExtra("COST");
 //        boolean isReturn = sender.getBooleanExtra("RETURN", false);
 
-        mFromTextView.setText(getString(R.string.journey_detail_from, mTicket.getFromTitle()));
-        mToTextView.setText(getString(R.string.journey_detail_to, mTicket.getToTitle()));
-        mCostTextView.setText(getString(R.string.journey_detail_cost, mTicket.getCostRounded()));
-        mReturnTextView.setVisibility(mTicket.isReturn() ? View.VISIBLE : View.GONE);
+        mFromTextView.setText(getString(R.string.journey_detail_from, mJourney.getFromTitle()));
+        mToTextView.setText(getString(R.string.journey_detail_to, mJourney.getToTitle()));
+        mCostTextView.setText(getString(R.string.journey_detail_cost, mJourney.getCostRounded()));
+        mReturnTextView.setVisibility(mJourney.isReturn() ? View.VISIBLE : View.GONE);
 
         mFirstNameEditText.setText(mUser.getFirstName());
         mSurnameEditText.setText(mUser.getSurnameName());

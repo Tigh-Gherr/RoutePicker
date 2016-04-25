@@ -29,10 +29,10 @@ public class TicketIO {
         mFilename = filename;
     }
 
-    public void saveTickets(ArrayList<Ticket> tickets) throws JSONException, IOException {
+    public void saveTickets(ArrayList<Journey> journeys) throws JSONException, IOException {
             JSONArray array =  new JSONArray();
 
-            for(Ticket t : tickets) {
+            for(Journey t : journeys) {
                 array.put(t.toJson());
             }
 
@@ -49,15 +49,15 @@ public class TicketIO {
         }
     }
 
-    public ArrayList<Ticket> loadTickets() throws IOException, JSONException {
-        ArrayList<Ticket> tickets = new ArrayList<>();
+    public ArrayList<Journey> loadTickets() throws IOException, JSONException {
+        ArrayList<Journey> journeys = new ArrayList<>();
         BufferedReader reader = null;
 
         try {
             InputStream in = mContext.openFileInput(mFilename);
             reader = new BufferedReader(new InputStreamReader(in));
             StringBuilder jsonString = new StringBuilder();
-            String line = null;
+            String line;
             while((line = reader.readLine()) != null) {
                 jsonString.append(line);
             }
@@ -65,7 +65,7 @@ public class TicketIO {
             JSONArray array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
 
             for(int i = 0; i < array.length(); i++) {
-                tickets.add(new Ticket(array.getJSONObject(i), mContext));
+                journeys.add(new Journey(array.getJSONObject(i), mContext));
             }
 
         } catch (FileNotFoundException e) {
@@ -75,6 +75,6 @@ public class TicketIO {
                 reader.close();
             }
         }
-        return tickets;
+        return journeys;
     }
 }

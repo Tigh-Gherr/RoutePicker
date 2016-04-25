@@ -29,4 +29,10 @@ public class UserSingleton {
     public User getUser() {
         return mUser;
     }
+
+    public void reset() {
+        mUser = null;
+        sUserSingleton = null;
+        mApplicationContext = null;
+    }
 }

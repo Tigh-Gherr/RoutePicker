@@ -25,7 +25,7 @@ import java.util.Random;
 import uni.tighearnan.routepicker.CurrentTicketSingleton;
 import uni.tighearnan.routepicker.Payment.PaymentActivity;
 import uni.tighearnan.routepicker.R;
-import uni.tighearnan.routepicker.Ticket.Ticket;
+import uni.tighearnan.routepicker.Ticket.Journey;
 
 
 /**
@@ -42,7 +42,7 @@ public class JourneyDetailsFragment extends Fragment {
     private AppCompatTextView mCostTextView;
     private AppCompatButton mConfirmButton;
 
-    private Ticket mTicket;
+    private Journey mJourney;
 
 //    private double mBaseCost;
 
@@ -67,7 +67,7 @@ public class JourneyDetailsFragment extends Fragment {
         mReturnSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mTicket.setReturn(isChecked);
+                mJourney.setReturn(isChecked);
                 updateCost();
             }
         });
@@ -75,7 +75,7 @@ public class JourneyDetailsFragment extends Fragment {
         mDisabilitySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mTicket.setDisability(isChecked);
+                mJourney.setDisability(isChecked);
             }
         });
 
@@ -90,7 +90,7 @@ public class JourneyDetailsFragment extends Fragment {
         if (getActivity().getIntent().getBooleanExtra("NEW", false)) {
             setupJourneyDetails();
         } else {
-            mTicket = CurrentTicketSingleton.get(getActivity()).getTicket();
+            mJourney = CurrentTicketSingleton.get(getActivity()).getJourney();
             setupFromPreviousTicket();
         }
 
@@ -98,13 +98,13 @@ public class JourneyDetailsFragment extends Fragment {
     }
 
     private void setupFromPreviousTicket() {
-        String from = mTicket.getFromTitle();
-        String to = mTicket.getToTitle();
+        String from = mJourney.getFromTitle();
+        String to = mJourney.getToTitle();
 
         mFromTextView.setText(from);
         mToTextView.setText(to);
 
-        mReturnSwitch.setChecked(mTicket.isReturn());
+        mReturnSwitch.setChecked(mJourney.isReturn());
 
         updateCost();
     }
@@ -123,15 +123,15 @@ public class JourneyDetailsFragment extends Fragment {
             public void onMapReady(final GoogleMap googleMap) {
                 // TODO: 14/04/16 Dynamic zoom updates.
 
-                if (mTicket.setAddresses()) {
-                    googleMap.addMarker(new MarkerOptions().title(mTicket.getFromTitle()).position(mTicket.getFromLatLng()));
-                    googleMap.addMarker(new MarkerOptions().title(mTicket.getToTitle()).position(mTicket.getToLatLng()));
+                if (mJourney.setAddresses()) {
+                    googleMap.addMarker(new MarkerOptions().title(mJourney.getFromTitle()).position(mJourney.getFromLatLng()));
+                    googleMap.addMarker(new MarkerOptions().title(mJourney.getToTitle()).position(mJourney.getToLatLng()));
 
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             googleMap.moveCamera(CameraUpdateFactory
-                                    .newLatLngBounds(mTicket.createLatLngBounds(), 5));
+                                    .newLatLngBounds(mJourney.createLatLngBounds(), 5));
                         }
                     }, 100);
                 }
@@ -154,7 +154,7 @@ public class JourneyDetailsFragment extends Fragment {
         mFromTextView.setText(getString(R.string.journey_detail_from, from));
         mToTextView.setText(getString(R.string.journey_detail_to, to));
 
-        mTicket = new Ticket(getActivity().getApplicationContext(), from, to);
+        mJourney = new Journey(getActivity().getApplicationContext(), from, to);
 
         Random rn = new Random();
         int low = 8;
@@ -163,9 +163,9 @@ public class JourneyDetailsFragment extends Fragment {
 
         double cost = rn.nextInt(high - low) + low + (half ? 0.5d : 0d);
 
-        mTicket.setCost(cost);
-        mTicket.setReturn(mReturnSwitch.isChecked());
-        mTicket.setDisability(mDisabilitySwitch.isChecked());
+        mJourney.setCost(cost);
+        mJourney.setReturn(mReturnSwitch.isChecked());
+        mJourney.setDisability(mDisabilitySwitch.isChecked());
         updateCost();
     }
 
@@ -174,12 +174,12 @@ public class JourneyDetailsFragment extends Fragment {
     }
 
     private void updateCost() {
-        mCostTextView.setText(getString(R.string.journey_detail_cost, mTicket.getCostRounded()));
+        mCostTextView.setText(getString(R.string.journey_detail_cost, mJourney.getCostRounded()));
     }
 
 
     private void proceedToPayment() {
-        CurrentTicketSingleton.get(getActivity()).setTicket(mTicket);
+        CurrentTicketSingleton.get(getActivity()).setJourney(mJourney);
         startActivity(new Intent(getActivity(), PaymentActivity.class));
     }
 }

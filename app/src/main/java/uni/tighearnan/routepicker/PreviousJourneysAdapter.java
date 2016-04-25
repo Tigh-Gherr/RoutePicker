@@ -9,20 +9,20 @@ import android.widget.FrameLayout;
 
 import java.util.ArrayList;
 
-import uni.tighearnan.routepicker.Ticket.Ticket;
+import uni.tighearnan.routepicker.Ticket.Journey;
 
 /**
  * Created by tighearnan on 16/04/16.
  */
-public class PreviousTicketsAdapter extends RecyclerView.Adapter<PreviousTicketsAdapter.PreviousTicketsViewHolder> {
+public class PreviousJourneysAdapter extends RecyclerView.Adapter<PreviousJourneysAdapter.PreviousTicketsViewHolder> {
 
     // TODO: Wire up buttons
 
-    private ArrayList<Ticket> mTickets;
+    private ArrayList<Journey> mJourneys;
     private AdapterItemSelectedListener mItemSelectedListener;
 
-    public PreviousTicketsAdapter(ArrayList<Ticket> tickets) {
-        mTickets = tickets;
+    public PreviousJourneysAdapter(ArrayList<Journey> journeys) {
+        mJourneys = journeys;
     }
 
     public void setItemSelectedListener(AdapterItemSelectedListener listener) {
@@ -39,7 +39,7 @@ public class PreviousTicketsAdapter extends RecyclerView.Adapter<PreviousTickets
 
     @Override
     public void onBindViewHolder(PreviousTicketsViewHolder holder, int position) {
-        Ticket current = mTickets.get(position);
+        Journey current = mJourneys.get(position);
 //        holder.mRouteName.setText(current.getFromTitle() + " - " + current.getToTitle());
         holder.mRouteFrom.setText("From: " + current.getFromTitle());
         holder.mRouteTo.setText("To: " + current.getToTitle());
@@ -47,7 +47,7 @@ public class PreviousTicketsAdapter extends RecyclerView.Adapter<PreviousTickets
 
     @Override
     public int getItemCount() {
-        return mTickets.size();
+        return mJourneys.size();
     }
 
     public class PreviousTicketsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

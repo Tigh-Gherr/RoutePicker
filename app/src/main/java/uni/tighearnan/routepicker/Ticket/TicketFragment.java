@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.google.zxing.BarcodeFormat;
 
 import uni.tighearnan.routepicker.CurrentTicketSingleton;
-import uni.tighearnan.routepicker.PreviousTicketsSingleton;
+import uni.tighearnan.routepicker.PreviousJourneysSingleton;
 import uni.tighearnan.routepicker.R;
 
 
@@ -28,7 +28,7 @@ public class TicketFragment extends Fragment {
     private AppCompatImageView mBarcodeImageView;
     private AppCompatTextView mBarcodeTextView;
 
-    private Ticket mTicket;
+    private Journey mJourney;
 
     public TicketFragment() {
         // Required empty public constructor
@@ -40,18 +40,18 @@ public class TicketFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_ticket, container, false);
 
-        mTicket = CurrentTicketSingleton.get(getActivity()).getTicket();
+        mJourney = CurrentTicketSingleton.get(getActivity()).getJourney();
 
         mFromTextView = (AppCompatTextView) v.findViewById(R.id.text_view_from);
-        mFromTextView.setText(mTicket.getFromTitle());
+        mFromTextView.setText(mJourney.getFromTitle());
 
         mToTextView = (AppCompatTextView) v.findViewById(R.id.text_view_to);
-        mToTextView.setText(mTicket.getToTitle());
+        mToTextView.setText(mJourney.getToTitle());
 
         DisplayMetrics metrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-        String hash = hash(mTicket.getFromTitle(), mTicket.getToTitle(), mTicket.isReturn());
+        String hash = hash(mJourney.getFromTitle(), mJourney.getToTitle(), mJourney.isReturn());
 
         mBarcodeImageView = (AppCompatImageView) v.findViewById(R.id.image_view_barcode);
         mBarcodeImageView.setImageBitmap(BarcodeGenerator.generateBarcodeBitmap(
@@ -71,18 +71,18 @@ public class TicketFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        PreviousTicketsSingleton.get(getActivity()).addTicket(mTicket);
+        PreviousJourneysSingleton.get(getActivity()).addJourneyAndPost(mJourney);
 
-        /*if (!previousTickets.contains(mTicket)) {
-            previousTickets.add(mTicket);
+        /*if (!previousTickets.contains(mJourney)) {
+            previousTickets.add(mJourney);
         } else {
-            int index = previousTickets.indexOf(mTicket);
+            int index = previousTickets.indexOf(mJourney);
             if(index != 0) {
                 Collections.swap(previousTickets, index, 0);
             }
         }*/
 
-        PreviousTicketsSingleton.get(getActivity()).saveTickets();
+//        PreviousJourneysSingleton.get(getActivity()).saveTickets();
     }
 
     private String hash(String from, String to, boolean isReturn) {
