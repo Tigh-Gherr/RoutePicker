@@ -7,7 +7,6 @@ import java.util.Collections;
 
 import uni.tighearnan.routepicker.Ticket.Journey;
 import uni.tighearnan.routepicker.Ticket.JourneyUploadASyncTask;
-import uni.tighearnan.routepicker.Ticket.TicketIO;
 
 /**
  * Created by tighearnan on 16/04/16.
@@ -16,7 +15,6 @@ public class PreviousJourneysSingleton {
     private static PreviousJourneysSingleton sPreviousJourneysSingleton;
     private ArrayList<Journey> mPreviousJourneys;
     private Context mApplicationContext;
-    private TicketIO mIO;
 
     private PreviousJourneysSingleton(Context c) {
         mApplicationContext = c;
@@ -36,19 +34,6 @@ public class PreviousJourneysSingleton {
 
     public ArrayList<Journey> getPreviousJourneys() {
         return mPreviousJourneys;
-    }
-
-    public boolean saveTickets() {
-        if(mPreviousJourneys == null) {
-            return false;
-        }
-
-        try {
-            mIO.saveTickets(mPreviousJourneys);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
     }
 
     public void addJourney(Journey journey) {
