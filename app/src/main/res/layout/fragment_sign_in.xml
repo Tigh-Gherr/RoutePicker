@@ -46,6 +46,16 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/button_createAccount"
+                style="@style/ButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center"
+                android:background="#0000"
+                android:layout_marginLeft="8dp"
+                android:text="Create Account"
+                android:textColor="@color/md_blue_400"/>
 
             <ProgressBar
                 android:id="@+id/progress_bar_signIn"
@@ -66,15 +76,5 @@
 
     </LinearLayout>
 
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/button_createAccount"
-        style="@style/ButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
-        android:background="#0000"
-        android:text="Create Account"
-        android:textColor="@color/md_blue_400"/>
 
 </FrameLayout>

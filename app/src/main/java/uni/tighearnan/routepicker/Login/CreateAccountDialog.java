@@ -147,28 +147,30 @@ public class CreateAccountDialog extends AppCompatDialogFragment {
             mEmailEditText.setError(emptyfield);
             errorView = mEmailEditText;
             verified = false;
+        } else if(!isValidEmail(mEmailEditText)) {
+            mEmailEditText.setError("Invalid email.");
+            errorView = mEmailEditText;
+            verified = false;
         }
 
         if (isEmpty(mPasswordEditText)) {
             mPasswordEditText.setError(emptyfield);
             errorView = mPasswordEditText;
             verified = false;
-        }
-
-        if (isEmpty(mConfirmPasswordEditText)) {
-            mConfirmPasswordEditText.setError(emptyfield);
-            errorView = mConfirmPasswordEditText;
-            verified = false;
-        }
-
-        String pass = mPasswordEditText.getText().toString();
-        String confpass = mConfirmPasswordEditText.getText().toString();
-
-        if (!pass.equals(confpass)) {
-            mPasswordEditText.setError("Passwords do not match.");
-            mConfirmPasswordEditText.setError("Passwords do not match.");
+        } else if(!isValidPassword(mPasswordEditText)) {
+            mPasswordEditText.setError("Password is too short.");
             errorView = mPasswordEditText;
             verified = false;
+        } else {
+            String pass = mPasswordEditText.getText().toString();
+            String confpass = mConfirmPasswordEditText.getText().toString();
+
+            if (!pass.equals(confpass)) {
+                mPasswordEditText.setError("Passwords do not match.");
+                mConfirmPasswordEditText.setError("Passwords do not match.");
+                errorView = mPasswordEditText;
+                verified = false;
+            }
         }
 
         if (!verified) {
@@ -176,6 +178,15 @@ public class CreateAccountDialog extends AppCompatDialogFragment {
         }
 
         return verified;
+    }
+
+    private boolean isValidPassword(AppCompatEditText editText) {
+        return editText.getText().toString().length() > 6;
+    }
+
+    private boolean isValidEmail(AppCompatEditText editText) {
+        String text = editText.getText().toString();
+        return text.contains("@") && text.contains(".");
     }
 
     private boolean isEmpty(AppCompatEditText editText) {
