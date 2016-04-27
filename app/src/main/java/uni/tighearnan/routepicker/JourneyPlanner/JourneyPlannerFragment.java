@@ -111,6 +111,7 @@ public class JourneyPlannerFragment extends Fragment {
                 Journey journey = PreviousJourneysSingleton.get(getActivity()).getPreviousJourneys().get(position);
                 CurrentTicketSingleton.get(getActivity()).setJourney(journey);
 
+
                 startActivity(new Intent(getActivity(), JourneyDetailsActivity.class));
             }
         });

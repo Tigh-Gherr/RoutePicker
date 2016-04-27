@@ -28,6 +28,8 @@ public class TicketFragment extends Fragment {
     private AppCompatImageView mBarcodeImageView;
     private AppCompatTextView mBarcodeTextView;
 
+    private Ticket mTicket;
+
     private Journey mJourney;
 
     public TicketFragment() {

@@ -139,7 +139,7 @@ public class PaymentFragment extends Fragment {
 
         String firstName = mFirstNameEditText.getText().toString();
         String surname = mSurnameEditText.getText().toString();
-        String cardType = mCardTypeSpinner.getSelectedItem().toString();
+        int cardType = mCardTypeSpinner.getSelectedItemPosition();
         String cardNumber = mCardNumberEditText.getText().toString();
         String cvcNum = mCardCVCNumberEditText.getText().toString();
 
@@ -246,6 +246,19 @@ public class PaymentFragment extends Fragment {
         if(cancel) {
             errorView.requestFocus();
         } else {
+            CreditCard creditCard = new CreditCard(cardNumber, cardType, expMonth, expYear, billingLine1, billingLine2, cvcNum);
+            String url = getString(R.string.upload_cc_url,
+                                            mUser.getId(),
+                                            cardNumber,
+                                            cardType,
+                                            expMonth,
+                                            expYear,
+                                            billingLine1.replaceAll(" ", "_"),
+                                            billingLine2.replaceAll(" ", "_"),
+                                            cvcNum);
+            CreditCardPostASyncTask aSyncTask = new CreditCardPostASyncTask();
+            aSyncTask.execute(url);
+            mUser.setCreditCard(creditCard);
             startActivity(new Intent(getActivity(), TicketActivity.class));
         }
     }

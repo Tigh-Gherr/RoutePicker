@@ -21,15 +21,6 @@ import java.util.List;
  */
 public class Journey {
 
-    private static final String JSON_FROM_TITLE = "FROM";
-    private static final String JSON_TO_TITLE = "TO";
-    private static final String JSON_COST = "COST";
-    private static final String JSON_RETURN = "RETURN";
-    private static final String JSON_FROM_LAT = "FROMLAT";
-    private static final String JSON_FROM_LNG = "FROMLNG";
-    private static final String JSON_TO_LAT = "TOLAT";
-    private static final String JSON_TO_LNG = "TOLNG";
-
     private String mFromTitle;
     private String mToTitle;
 
@@ -50,17 +41,6 @@ public class Journey {
         mToTitle = to;
 
         mApplicationContext = applicationContext.getApplicationContext();
-    }
-
-    public Journey(JSONObject ticket, Context applicationContext) throws JSONException {
-        mFromTitle = ticket.getString(JSON_FROM_TITLE);
-        mToTitle = ticket.getString(JSON_TO_TITLE);
-        mCost = ticket.getDouble(JSON_COST);
-        mReturn = ticket.has(JSON_RETURN) && ticket.getBoolean(JSON_RETURN);
-
-        mApplicationContext = applicationContext;
-
-        setAddresses();
     }
 
     public boolean setAddresses() {
@@ -147,23 +127,6 @@ public class Journey {
 
     public void setCost(double cost) {
         mCost = cost;
-    }
-
-    public JSONObject toJson() throws JSONException {
-        JSONObject json = new JSONObject();
-
-        json.put(JSON_FROM_TITLE, mFromTitle);
-        json.put(JSON_TO_TITLE, mToTitle);
-        json.put(JSON_COST, mCost);
-        json.put(JSON_RETURN, mReturn);
-
-        json.put(JSON_FROM_LAT, mFromLatLng.latitude);
-        json.put(JSON_FROM_LNG, mFromLatLng.longitude);
-
-        json.put(JSON_TO_LAT, mToLatLng.latitude);
-        json.put(JSON_TO_LNG, mToLatLng.longitude);
-
-        return json;
     }
 
 }
