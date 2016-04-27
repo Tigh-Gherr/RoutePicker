@@ -1,21 +1,25 @@
-package uni.tighearnan.routepicker.Payment;
+package uni.tighearnan.routepicker;
 
 import android.os.AsyncTask;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-
-import uni.tighearnan.routepicker.CreditCard;
 
 /**
  * Created by tighearnan on 27/04/16.
  */
-public class CreditCardPostASyncTask extends AsyncTask<String, Void, Void> {
+public class PostASyncTask extends AsyncTask<String, Void, Void> {
+
+    private PostListener mListener;
+
+    public void setListener(PostListener listener) {
+        mListener = listener;
+    }
 
     @Override
     protected Void doInBackground(String... params) {
+
         HttpURLConnection connection;
 
         try {
@@ -31,5 +35,14 @@ public class CreditCardPostASyncTask extends AsyncTask<String, Void, Void> {
         }
 
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+
+        if(mListener != null) {
+            mListener.onPostComplete();
+        }
     }
 }

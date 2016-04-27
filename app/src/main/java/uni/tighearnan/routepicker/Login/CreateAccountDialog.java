@@ -3,7 +3,6 @@ package uni.tighearnan.routepicker.Login;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.AppCompatEditText;
@@ -12,8 +11,9 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import uni.tighearnan.routepicker.PostASyncTask;
+import uni.tighearnan.routepicker.PostListener;
 import uni.tighearnan.routepicker.R;
 
 /**
@@ -105,8 +105,8 @@ public class CreateAccountDialog extends AppCompatDialogFragment {
             String email = mEmailEditText.getText().toString();
             String password = mPasswordEditText.getText().toString();
 
-            CreateAccountASyncTask task = new CreateAccountASyncTask();
-            task.setListener(new PostToDatabaseListener() {
+            PostASyncTask task = new PostASyncTask();
+            task.setListener(new PostListener() {
                 @Override
                 public void onPostComplete() {
                     mListener.onConfirmed(fname);

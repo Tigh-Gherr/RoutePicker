@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import uni.tighearnan.routepicker.Ticket.Journey;
-import uni.tighearnan.routepicker.Ticket.JourneyUploadASyncTask;
 
 /**
  * Created by tighearnan on 16/04/16.
@@ -61,8 +60,16 @@ public class PreviousJourneysSingleton {
         }
         addJourney(journey);
 
-        JourneyUploadASyncTask aSyncTask = new JourneyUploadASyncTask(mApplicationContext);
-        aSyncTask.execute(journey);
+        int id = UserSingleton.get(mApplicationContext).getUser().getId();
+
+        String url = mApplicationContext.getString(R.string.upload_journey_url,
+                                                    id,
+                                                    journey.getFromTitle(),
+                                                    journey.getToTitle(),
+                                                    journey.isReturn() ? "1" : "0",
+                                                    journey.getBaseCost());
+        PostASyncTask aSyncTask = new PostASyncTask();
+        aSyncTask.execute(url);
     }
 
     private boolean journeyIsUnique(Journey journey) {

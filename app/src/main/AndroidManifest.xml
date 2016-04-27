@@ -22,6 +22,7 @@
         <activity
             android:name=".JourneyPlanner.JourneyPlannerActivity"
             android:label="@string/activity_title_journey_planner"
+            android:windowSoftInputMode="adjustPan"
             android:launchMode="singleTask">
         </activity>
         <activity
@@ -41,16 +42,17 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAZm6iFDhF3zM0wbimYqTkBnUK4d8CO9Lk"/>
-
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version"/>
 
         <activity
+            android:name=".Ticket.TicketActivity"
             android:label="@string/activity_title_ticket"
             android:launchMode="singleTask"
-            android:parentActivityName=".JourneyPlanner.JourneyPlannerActivity"
-            android:name=".Ticket.TicketActivity">
+            android:parentActivityName=".JourneyPlanner.JourneyPlannerActivity">
+        </activity>
+        <activity android:name=".PurchasedTickets.PurchasedTicketsActivity">
         </activity>
     </application>
 

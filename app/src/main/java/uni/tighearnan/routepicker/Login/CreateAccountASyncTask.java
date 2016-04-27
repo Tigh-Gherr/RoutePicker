@@ -4,17 +4,18 @@ import android.os.AsyncTask;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
+
+import uni.tighearnan.routepicker.PostListener;
 
 /**
  * Created by tighearnan on 24/04/16.
  */
 public class CreateAccountASyncTask extends AsyncTask<String, Void, Void> {
 
-    private PostToDatabaseListener mListener;
+    private PostListener mListener;
 
-    public void setListener(PostToDatabaseListener listener) {
+    public void setListener(PostListener listener) {
         mListener = listener;
     }
 

@@ -18,6 +18,7 @@ import java.util.Date;
 import uni.tighearnan.routepicker.CreditCard;
 import uni.tighearnan.routepicker.CurrentJourneySingleton;
 import uni.tighearnan.routepicker.CurrentTicketSingleton;
+import uni.tighearnan.routepicker.PostASyncTask;
 import uni.tighearnan.routepicker.PreviousJourneysSingleton;
 import uni.tighearnan.routepicker.R;
 import uni.tighearnan.routepicker.Ticket.Journey;
@@ -259,7 +260,7 @@ public class PaymentFragment extends Fragment {
                                             billingLine1.replaceAll(" ", "_"),
                                             billingLine2.replaceAll(" ", "_"),
                                             cvcNum);
-            CreditCardPostASyncTask aSyncTask = new CreditCardPostASyncTask();
+            PostASyncTask aSyncTask = new PostASyncTask();
             aSyncTask.execute(url);
 
             mUser.setCreditCard(creditCard);
