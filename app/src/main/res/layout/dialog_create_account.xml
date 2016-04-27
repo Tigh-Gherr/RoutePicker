@@ -20,6 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="First Name"
+                android:inputType="text|textCapWords"
                 android:imeOptions="actionNext"
                 android:maxLines="1"
                 android:singleLine="true"/>
@@ -35,6 +36,7 @@
                 android:id="@+id/edit_text_surname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="text|textCapWords"
                 android:hint="Surname"
                 android:imeOptions="actionNext"
                 android:maxLines="1"

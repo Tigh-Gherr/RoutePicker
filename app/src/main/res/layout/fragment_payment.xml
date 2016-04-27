@@ -75,6 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="First Name"
+                    android:inputType="textPersonName"
                     android:imeOptions="actionNext"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -214,7 +215,7 @@
                     android:layout_weight="1"
                     android:hint="Line 1"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
+                    android:inputType="text|textCapWords"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -228,7 +229,7 @@
                 android:layout_marginRight="16dp"
                 android:hint="Line 2"
                 android:imeOptions="actionNext"
-                android:inputType="text"
+                android:inputType="text|textCapWords"
                 android:maxLines="1"
                 android:singleLine="true" />
 
