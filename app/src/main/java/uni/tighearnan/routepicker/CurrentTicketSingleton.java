@@ -2,14 +2,14 @@ package uni.tighearnan.routepicker;
 
 import android.content.Context;
 
-import uni.tighearnan.routepicker.Ticket.Journey;
+import uni.tighearnan.routepicker.Ticket.Ticket;
 
 /**
- * Created by tighearnan on 16/04/16.
+ * Created by tighearnan on 27/04/16.
  */
 public class CurrentTicketSingleton {
     private static CurrentTicketSingleton sCurrentTicketSingleton;
-    private Journey mJourney;
+    private Ticket mTicket;
     private Context mApplicationContext;
 
     private CurrentTicketSingleton(Context c) {
@@ -24,11 +24,11 @@ public class CurrentTicketSingleton {
         return sCurrentTicketSingleton;
     }
 
-    public Journey getJourney() {
-        return mJourney;
+    public void setTicket(Ticket ticket) {
+        mTicket = ticket;
     }
 
-    public void setJourney(Journey journey) {
-        mJourney = journey;
+    public Ticket getTicket() {
+        return mTicket;
     }
 }

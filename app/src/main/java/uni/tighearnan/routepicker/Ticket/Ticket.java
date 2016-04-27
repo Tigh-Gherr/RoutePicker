@@ -5,33 +5,48 @@ package uni.tighearnan.routepicker.Ticket;
  */
 public class Ticket {
 
-    private Journey mJourney;
+    private String mFrom;
+    private String mTo;
+    private boolean mIsReturn;
     private String mBarcode;
     private boolean isUsed;
 
-    public Ticket(Journey journey) {
-        mJourney = journey;
+    public Ticket(String from, String to, boolean isReturn) {
+        mFrom = from;
+        mTo = to;
         generateBarcode();
     }
 
-    private void generateBarcode() {
-        String from = mJourney.getFromTitle();
-        String to = mJourney.getToTitle();
-        boolean isReturn = mJourney.isReturn();
+    public String getFrom() {
+        return mFrom;
+    }
 
+    public String getTo() {
+        return mTo;
+    }
+
+    public boolean isReturn() {
+        return mIsReturn;
+    }
+
+    public boolean isUsed() {
+        return isUsed;
+    }
+
+    public void setUsed(boolean used) {
+        isUsed = used;
+    }
+
+    private void generateBarcode() {
         StringBuilder builder = new StringBuilder();
-        builder.append(from.substring(0, 4).toUpperCase())
-                .append("-").append(isReturn ? 1 : 0).append("-")
-                .append(to.substring(0, 4).toUpperCase());
+        builder.append(mFrom.substring(0, 4).toUpperCase())
+                .append("-").append(mIsReturn ? 1 : 0).append("-")
+                .append(mTo.substring(0, 4).toUpperCase());
 
         mBarcode = builder.toString();
     }
 
     public String getBarcode() {
         return mBarcode;
-    }
-
-    public Journey getJourney() {
-        return mJourney;
     }
 }

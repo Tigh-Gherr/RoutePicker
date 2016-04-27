@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import uni.tighearnan.routepicker.AdapterItemSelectedListener;
-import uni.tighearnan.routepicker.CurrentTicketSingleton;
+import uni.tighearnan.routepicker.CurrentJourneySingleton;
 import uni.tighearnan.routepicker.JourneyDetails.JourneyDetailsActivity;
 import uni.tighearnan.routepicker.PreviousJourneysSingleton;
 import uni.tighearnan.routepicker.PreviousJourneysAdapter;
@@ -109,8 +109,7 @@ public class JourneyPlannerFragment extends Fragment {
             @Override
             public void onAdapterItemSelected(int position) {
                 Journey journey = PreviousJourneysSingleton.get(getActivity()).getPreviousJourneys().get(position);
-                CurrentTicketSingleton.get(getActivity()).setJourney(journey);
-
+                CurrentJourneySingleton.get(getActivity()).setJourney(journey);
 
                 startActivity(new Intent(getActivity(), JourneyDetailsActivity.class));
             }

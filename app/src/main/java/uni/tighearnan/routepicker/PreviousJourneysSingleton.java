@@ -40,10 +40,7 @@ public class PreviousJourneysSingleton {
         if(!mPreviousJourneys.contains(journey)) {
             mPreviousJourneys.add(0, journey);
         } else {
-            int index = mPreviousJourneys.indexOf(journey);
-            for(int i = index; i > 0; i--) {
-                Collections.swap(mPreviousJourneys, i, i - 1);
-            }
+            moveToTop(journey);
         }
 
         if(mPreviousJourneys.size() > 4) {
@@ -51,11 +48,38 @@ public class PreviousJourneysSingleton {
         }
     }
 
+    private void moveToTop(Journey journey) {
+        int index = mPreviousJourneys.indexOf(journey);
+        for(int i = index; i > 0; i--) {
+            Collections.swap(mPreviousJourneys, i, i - 1);
+        }
+    }
+
     public void addJourneyAndPost(Journey journey) {
+        if(!journeyIsUnique(journey)) {
+            return;
+        }
         addJourney(journey);
 
         JourneyUploadASyncTask aSyncTask = new JourneyUploadASyncTask(mApplicationContext);
         aSyncTask.execute(journey);
+    }
+
+    private boolean journeyIsUnique(Journey journey) {
+        String from = journey.getFromTitle();
+        String to = journey.getToTitle();
+
+        for(int i = 0; i < mPreviousJourneys.size(); i++) {
+            Journey j = mPreviousJourneys.get(i);
+            if(from.equalsIgnoreCase(j.getFromTitle()) || from.equalsIgnoreCase(j.getToTitle())) {
+                if (to.equalsIgnoreCase(j.getFromTitle()) || to.equalsIgnoreCase(j.getToTitle())) {
+                    moveToTop(j);
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     public void reset() {

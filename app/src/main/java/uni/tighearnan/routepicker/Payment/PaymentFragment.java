@@ -16,9 +16,12 @@ import android.view.ViewGroup;
 import java.util.Date;
 
 import uni.tighearnan.routepicker.CreditCard;
+import uni.tighearnan.routepicker.CurrentJourneySingleton;
 import uni.tighearnan.routepicker.CurrentTicketSingleton;
+import uni.tighearnan.routepicker.PreviousJourneysSingleton;
 import uni.tighearnan.routepicker.R;
 import uni.tighearnan.routepicker.Ticket.Journey;
+import uni.tighearnan.routepicker.Ticket.Ticket;
 import uni.tighearnan.routepicker.Ticket.TicketActivity;
 import uni.tighearnan.routepicker.User;
 import uni.tighearnan.routepicker.UserSingleton;
@@ -93,7 +96,7 @@ public class PaymentFragment extends Fragment {
     private void setupInformation() {
         Intent sender = getActivity().getIntent();
 
-        mJourney = CurrentTicketSingleton.get(getActivity()).getJourney();
+        mJourney = CurrentJourneySingleton.get(getActivity()).getJourney();
         mUser = UserSingleton.get(getActivity()).getUser();
 
 //        String from = sender.getStringExtra("FROM");
@@ -258,7 +261,15 @@ public class PaymentFragment extends Fragment {
                                             cvcNum);
             CreditCardPostASyncTask aSyncTask = new CreditCardPostASyncTask();
             aSyncTask.execute(url);
+
             mUser.setCreditCard(creditCard);
+
+            Ticket ticket = new Ticket(mJourney.getFromTitle(), mJourney.getToTitle(), mJourney.isReturn());
+            ticket.setUsed(false);
+
+            CurrentTicketSingleton.get(getActivity()).setTicket(ticket);
+
+            PreviousJourneysSingleton.get(getActivity()).addJourneyAndPost(mJourney);
             startActivity(new Intent(getActivity(), TicketActivity.class));
         }
     }

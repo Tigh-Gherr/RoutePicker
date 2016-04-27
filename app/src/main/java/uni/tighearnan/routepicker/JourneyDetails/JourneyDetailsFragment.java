@@ -22,7 +22,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Random;
 
-import uni.tighearnan.routepicker.CurrentTicketSingleton;
+import uni.tighearnan.routepicker.CurrentJourneySingleton;
 import uni.tighearnan.routepicker.Payment.PaymentActivity;
 import uni.tighearnan.routepicker.R;
 import uni.tighearnan.routepicker.Ticket.Journey;
@@ -90,7 +90,7 @@ public class JourneyDetailsFragment extends Fragment {
         if (getActivity().getIntent().getBooleanExtra("NEW", false)) {
             setupJourneyDetails();
         } else {
-            mJourney = CurrentTicketSingleton.get(getActivity()).getJourney();
+            mJourney = CurrentJourneySingleton.get(getActivity()).getJourney();
             setupFromPreviousTicket();
         }
 
@@ -179,7 +179,7 @@ public class JourneyDetailsFragment extends Fragment {
 
 
     private void proceedToPayment() {
-        CurrentTicketSingleton.get(getActivity()).setJourney(mJourney);
+        CurrentJourneySingleton.get(getActivity()).setJourney(mJourney);
         startActivity(new Intent(getActivity(), PaymentActivity.class));
     }
 }
