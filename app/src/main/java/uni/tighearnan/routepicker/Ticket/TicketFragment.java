@@ -7,9 +7,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 
@@ -18,6 +20,7 @@ import uni.tighearnan.routepicker.CurrentTicketSingleton;
 import uni.tighearnan.routepicker.PostASyncTask;
 import uni.tighearnan.routepicker.PreviousJourneysSingleton;
 import uni.tighearnan.routepicker.R;
+import uni.tighearnan.routepicker.User;
 import uni.tighearnan.routepicker.UserSingleton;
 
 
@@ -72,16 +75,31 @@ public class TicketFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        int id = UserSingleton.get(getActivity()).getUser().getId();
+        boolean purchased = getActivity().getIntent().getBooleanExtra("PURCHASED", false);
 
-        String url = getString(R.string.upload_ticket_url, id,
-                                    mTicket.getFrom(),
-                                    mTicket.getTo(),
-                                    mTicket.isReturn() ? "1" : "0",
-                                    mTicket.getBarcode(),
-                                    mTicket.isUsed() ? "1" : "0");
+        if (purchased) {
+            int id = UserSingleton.get(getActivity()).getUser().getId();
 
-        PostASyncTask aSyncTask = new PostASyncTask();
-        aSyncTask.execute(url);
+            String url = getString(R.string.upload_ticket_url, id,
+                    mTicket.getFrom(),
+                    mTicket.getTo(),
+                    mTicket.isReturn() ? "1" : "0",
+                    mTicket.getBarcode(),
+                    mTicket.isUsed() ? "1" : "0");
+
+            PostASyncTask aSyncTask = new PostASyncTask();
+            aSyncTask.execute(url);
+
+            User user = UserSingleton.get(getActivity()).getUser();
+            user.getTickets().add(0, mTicket);
+        } else {
+
+            String url = getString(R.string.upload_ticket_used_url, mTicket.getId());
+            Toast.makeText(getActivity(), url, Toast.LENGTH_LONG).show();
+            PostASyncTask aSyncTask = new PostASyncTask();
+            aSyncTask.execute(url);
+
+            mTicket.setUsed(true);
+        }
     }
 }

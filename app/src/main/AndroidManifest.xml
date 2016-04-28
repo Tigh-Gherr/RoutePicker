@@ -52,7 +52,11 @@
             android:launchMode="singleTask"
             android:parentActivityName=".JourneyPlanner.JourneyPlannerActivity">
         </activity>
-        <activity android:name=".PurchasedTickets.PurchasedTicketsActivity">
+        <activity
+            android:name=".PurchasedTickets.PurchasedTicketsActivity"
+            android:label="Purchased Tickets"
+            android:launchMode="singleTask"
+            android:parentActivityName=".JourneyPlanner.JourneyPlannerActivity">
         </activity>
     </application>
 

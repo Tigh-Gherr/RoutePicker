@@ -1,9 +1,8 @@
 package uni.tighearnan.routepicker.Payment;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
 import uni.tighearnan.routepicker.R;
 

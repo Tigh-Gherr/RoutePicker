@@ -10,11 +10,20 @@ public class Ticket {
     private boolean mIsReturn;
     private String mBarcode;
     private boolean isUsed;
+    private int mId;
 
     public Ticket(String from, String to, boolean isReturn) {
         mFrom = from;
         mTo = to;
         generateBarcode();
+    }
+
+    public void setId(int id) {
+        mId = id;
+    }
+
+    public int getId() {
+        return mId;
     }
 
     public String getFrom() {
@@ -44,6 +53,10 @@ public class Ticket {
                 .append(mTo.substring(0, 4).toUpperCase());
 
         mBarcode = builder.toString();
+    }
+
+    public void setBarcode(String barcode) {
+        mBarcode = barcode;
     }
 
     public String getBarcode() {

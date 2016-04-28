@@ -29,6 +29,7 @@
     <string name="upload_journey_url">http://www.barcodetesting.co.nf/routePicker/addNewJourney.php?id=%1$s&amp;to=%2$s&amp;from=%3$s&amp;is_return=%4$s&amp;cost=%5$s</string>
     <string name="upload_cc_url">http://www.barcodetesting.co.nf/routePicker/addCreditCard.php?id=%1$s&amp;num=%2$s&amp;index=%3$s&amp;exp_mon=%4$s&amp;exp_year=%5$s&amp;addr1=%6$s&amp;addr2=%7$s&amp;cvc=%8$s</string>
     <string name="upload_ticket_url">http://www.barcodetesting.co.nf/routePicker/addTicket.php?userid=%1$s&amp;from=%2$s&amp;to=%3$s&amp;return=%4$s&amp;barcode=%5$s&amp;used=%6$s></string>
+    <string name="upload_ticket_used_url">http://www.barcodetesting.co.nf/routePicker/updateTicketToUsed.php?id=%s</string>
 
     <string-array name="card_types">
         <item>Visa</item>

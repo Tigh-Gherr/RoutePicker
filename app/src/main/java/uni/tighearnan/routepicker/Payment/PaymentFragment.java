@@ -271,7 +271,10 @@ public class PaymentFragment extends Fragment {
             CurrentTicketSingleton.get(getActivity()).setTicket(ticket);
 
             PreviousJourneysSingleton.get(getActivity()).addJourneyAndPost(mJourney);
-            startActivity(new Intent(getActivity(), TicketActivity.class));
+
+            Intent i = new Intent(getActivity(), TicketActivity.class);
+            i.putExtra("PURCHASED", true);
+            startActivity(i);
         }
     }
 

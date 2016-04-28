@@ -12,10 +12,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import uni.tighearnan.routepicker.CreditCard;
 import uni.tighearnan.routepicker.PreviousJourneysSingleton;
 import uni.tighearnan.routepicker.Ticket.Journey;
+import uni.tighearnan.routepicker.Ticket.Ticket;
 import uni.tighearnan.routepicker.User;
 
 /**
@@ -122,6 +124,26 @@ public class LoginASyncTask extends AsyncTask<LoginAuth, Void, User> {
             }
         }
 
-        return new User(id, email, fname, sname, creditCard);
+        ArrayList<Ticket> tickets = new ArrayList<>();
+        if(!jsonObject.isNull("tickets")) {
+            JSONArray jsonTickets = jsonObject.getJSONArray("tickets");
+            for(int i = 0; i < jsonTickets.length(); i++) {
+                JSONObject ticket = jsonTickets.getJSONObject(i);
+                int ticketId = ticket.getInt("id");
+                String from = ticket.getString("where_from");
+                String to = ticket.getString("where_to");
+                boolean isReturn = ticket.getInt("is_return") == 1;
+                String barcode = ticket.getString("barcode");
+                boolean used = ticket.getInt("used") == 1;
+
+                Ticket t = new Ticket(from, to, isReturn);
+                t.setId(ticketId);
+                t.setUsed(used);
+                t.setBarcode(barcode);
+                tickets.add(t);
+            }
+        }
+
+        return new User(id, email, fname, sname, creditCard, tickets);
     }
 }

@@ -3,14 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:foreground="?attr/selectableItemBackground">
 
     <FrameLayout
-        android:id="@+id/frame_layout_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:padding="16dp">
 
         <LinearLayout
@@ -22,32 +19,35 @@
                 android:id="@+id/text_view_from"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/journey_detail_from"/>
+                android:textSize="16sp"
+                android:text="From: "/>
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/text_view_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/journey_detail_to"/>
+                android:layout_marginTop="6dp"
+                android:textSize="16sp"
+                android:text="To: "/>
+
         </LinearLayout>
 
-
-        <!--<android.support.v7.widget.AppCompatTextView-->
-        <!--android:id="@+id/text_view_routeName"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="left|center"-->
-        <!--android:text="Route Name"/>-->
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/text_view_bookAgain"
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/checkbox_used"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center"
-            android:text="Book Again >"/>
-
+            android:clickable="false"
+            android:text="Used"/>
     </FrameLayout>
 
-    <include layout="@layout/recycler_view_separator"/>
+
+    <View
+        android:background="@color/md_grey_400"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"/>
 
 </FrameLayout>

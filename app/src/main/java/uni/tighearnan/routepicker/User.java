@@ -1,5 +1,9 @@
 package uni.tighearnan.routepicker;
 
+import java.util.ArrayList;
+
+import uni.tighearnan.routepicker.Ticket.Ticket;
+
 /**
  * Created by tighearnan on 19/04/16.
  */
@@ -10,13 +14,19 @@ public class User {
     private String mFirstName;
     private String mSurnameName;
     private CreditCard mCreditCard;
+    private ArrayList<Ticket> mTickets;
 
-    public User(int id, String email, String firstName, String surnameName, CreditCard creditCard) {
+    public User(int id, String email, String firstName, String surnameName, CreditCard creditCard, ArrayList<Ticket> tickets) {
         mId = id;
         mEmail = email;
         mFirstName = firstName;
         mSurnameName = surnameName;
         mCreditCard = creditCard;
+        mTickets = tickets;
+    }
+
+    public ArrayList<Ticket> getTickets() {
+        return mTickets;
     }
 
     public void setId(int id) {

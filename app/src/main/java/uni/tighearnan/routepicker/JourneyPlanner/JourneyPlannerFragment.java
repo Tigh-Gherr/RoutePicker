@@ -19,7 +19,7 @@ import uni.tighearnan.routepicker.AdapterItemSelectedListener;
 import uni.tighearnan.routepicker.CurrentJourneySingleton;
 import uni.tighearnan.routepicker.JourneyDetails.JourneyDetailsActivity;
 import uni.tighearnan.routepicker.PreviousJourneysSingleton;
-import uni.tighearnan.routepicker.PreviousJourneysAdapter;
+import uni.tighearnan.routepicker.PurchasedTickets.PurchasedTicketsActivity;
 import uni.tighearnan.routepicker.R;
 import uni.tighearnan.routepicker.Ticket.Journey;
 
@@ -34,6 +34,7 @@ public class JourneyPlannerFragment extends Fragment {
     private AppCompatImageButton mClearFromImageButton;
     private AppCompatImageButton mClearToImageButton;
     private AppCompatButton mGoButton;
+    private AppCompatButton mTicketsButton;
 
     private RecyclerView mPreviousJourneysRecyclerView;
     private PreviousJourneysAdapter mPreviousJourneysAdapter;
@@ -117,6 +118,14 @@ public class JourneyPlannerFragment extends Fragment {
 
         mPreviousJourneysRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mPreviousJourneysRecyclerView.setAdapter(mPreviousJourneysAdapter);
+
+        mTicketsButton = (AppCompatButton) v.findViewById(R.id.button_purchasedTickets);
+        mTicketsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), PurchasedTicketsActivity.class));
+            }
+        });
 
         return v;
     }
