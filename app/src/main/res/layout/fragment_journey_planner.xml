@@ -102,13 +102,30 @@
             android:textSize="20sp"
             android:textStyle="bold"/>
 
-        <include layout="@layout/recycler_view_separator"/>
+        <include
+            android:id="@+id/view_separator"
+            layout="@layout/recycler_view_separator"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_previousJourneys"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent">
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_previousJourneys"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/text_view_noJourneys"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingBottom="130dp"
+                android:text="No Previous Journeys"
+                android:textColor="@color/md_grey_400"
+                android:textSize="18sp"/>
+
+        </FrameLayout>
 
     </LinearLayout>
 
@@ -118,8 +135,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:text="Tickets"
+        android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"/>
+        android:text="Tickets"/>
 
 </FrameLayout>

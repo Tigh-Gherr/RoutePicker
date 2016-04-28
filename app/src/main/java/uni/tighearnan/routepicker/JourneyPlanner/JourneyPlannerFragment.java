@@ -3,17 +3,21 @@ package uni.tighearnan.routepicker.JourneyPlanner;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
 
 import uni.tighearnan.routepicker.AdapterItemSelectedListener;
 import uni.tighearnan.routepicker.CurrentJourneySingleton;
@@ -22,6 +26,7 @@ import uni.tighearnan.routepicker.PreviousJourneysSingleton;
 import uni.tighearnan.routepicker.PurchasedTickets.PurchasedTicketsActivity;
 import uni.tighearnan.routepicker.R;
 import uni.tighearnan.routepicker.Ticket.Journey;
+import uni.tighearnan.routepicker.UserSingleton;
 
 
 /**
@@ -38,6 +43,8 @@ public class JourneyPlannerFragment extends Fragment {
 
     private RecyclerView mPreviousJourneysRecyclerView;
     private PreviousJourneysAdapter mPreviousJourneysAdapter;
+
+    private ArrayList<Journey> mPreviousJourneys;
 
     private View.OnClickListener mClearListener = new View.OnClickListener() {
         @Override
@@ -103,8 +110,10 @@ public class JourneyPlannerFragment extends Fragment {
             }
         });
 
+        mPreviousJourneys = PreviousJourneysSingleton.get(getActivity()).getPreviousJourneys();
+
         mPreviousJourneysRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_previousJourneys);
-        mPreviousJourneysAdapter = new PreviousJourneysAdapter(PreviousJourneysSingleton.get(getActivity()).getPreviousJourneys());
+        mPreviousJourneysAdapter = new PreviousJourneysAdapter(mPreviousJourneys);
 
         mPreviousJourneysAdapter.setItemSelectedListener(new AdapterItemSelectedListener() {
             @Override
@@ -123,7 +132,11 @@ public class JourneyPlannerFragment extends Fragment {
         mTicketsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), PurchasedTicketsActivity.class));
+                if(UserSingleton.get(getActivity()).getUser().getTickets().size() == 0) {
+                    Snackbar.make(getView(), "No tickets to show.", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(getActivity(), PurchasedTicketsActivity.class));
+                }
             }
         });
 
@@ -134,6 +147,12 @@ public class JourneyPlannerFragment extends Fragment {
     public void onResume() {
         super.onResume();
         mPreviousJourneysAdapter.notifyDataSetChanged();
+        View separator = getView().findViewById(R.id.view_separator);
+        AppCompatTextView textView = (AppCompatTextView) getView().findViewById(R.id.text_view_noJourneys);
+        boolean checkPreviousJourneys = mPreviousJourneys.size() == 0;
+        separator.setVisibility(checkPreviousJourneys ? View.GONE : View.VISIBLE);
+        mPreviousJourneysRecyclerView.setVisibility(checkPreviousJourneys ? View.GONE : View.VISIBLE);
+        textView.setVisibility(checkPreviousJourneys ? View.VISIBLE : View.GONE);
     }
 
     private void tryLocations() {

@@ -93,9 +93,7 @@ public class TicketFragment extends Fragment {
             User user = UserSingleton.get(getActivity()).getUser();
             user.getTickets().add(0, mTicket);
         } else {
-
             String url = getString(R.string.upload_ticket_used_url, mTicket.getId());
-            Toast.makeText(getActivity(), url, Toast.LENGTH_LONG).show();
             PostASyncTask aSyncTask = new PostASyncTask();
             aSyncTask.execute(url);
 
