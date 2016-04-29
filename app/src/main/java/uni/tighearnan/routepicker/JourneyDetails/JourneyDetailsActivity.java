@@ -22,25 +22,4 @@ public class JourneyDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_journey_details, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.action_toggleBarcode:
-                FragmentManager fm = getSupportFragmentManager();
-                JourneyDetailsFragment fragment = (JourneyDetailsFragment) fm.findFragmentById(R.id.fragment);
-//                fragment.toggleBarcode();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

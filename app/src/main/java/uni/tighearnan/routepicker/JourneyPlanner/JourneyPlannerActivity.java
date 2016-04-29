@@ -9,9 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import uni.tighearnan.routepicker.Login.SignInActivity;
-import uni.tighearnan.routepicker.PreviousJourneysSingleton;
 import uni.tighearnan.routepicker.R;
-import uni.tighearnan.routepicker.UserSingleton;
 
 public class JourneyPlannerActivity extends AppCompatActivity {
 
@@ -38,7 +36,7 @@ public class JourneyPlannerActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.acion_logout:
+            case R.id.action_logout:
                 logout();
                 return true;
         }

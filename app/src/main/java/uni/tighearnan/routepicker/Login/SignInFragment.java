@@ -1,9 +1,11 @@
 package uni.tighearnan.routepicker.Login;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -15,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -37,6 +40,8 @@ public class SignInFragment extends Fragment {
 
     private AppCompatButton mCreateAccountButton;
 
+    private boolean mDialogShowing;
+
     public SignInFragment() {
         // Required empty public constructor
     }
@@ -46,6 +51,17 @@ public class SignInFragment extends Fragment {
         super.onResume();
         PreviousJourneysSingleton.get(getActivity()).reset();
         UserSingleton.get(getActivity()).reset();
+
+        if(!mDialogShowing) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mEmailEditText.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(mEmailEditText, InputMethodManager.SHOW_IMPLICIT);
+                }
+            }, 50);
+        }
     }
 
     @Override
@@ -69,6 +85,7 @@ public class SignInFragment extends Fragment {
 
         mCreateAccountButton = (AppCompatButton) v.findViewById(R.id.button_createAccount);
 
+        mDialogShowing = false;
         return v;
     }
 
@@ -96,9 +113,12 @@ public class SignInFragment extends Fragment {
                     public void onConfirmed(String name) {
                         Snackbar.make(view, name + ", your account has been created!", Snackbar.LENGTH_SHORT)
                                 .show();
+                        mDialogShowing = false;
                     }
                 });
+                mDialogShowing = true;
                 dialog.show(getActivity().getSupportFragmentManager(), "NEWUSER");
+
             }
         });
     }

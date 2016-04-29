@@ -18,6 +18,7 @@ import com.google.zxing.BarcodeFormat;
 import uni.tighearnan.routepicker.CurrentJourneySingleton;
 import uni.tighearnan.routepicker.CurrentTicketSingleton;
 import uni.tighearnan.routepicker.PostASyncTask;
+import uni.tighearnan.routepicker.PostListener;
 import uni.tighearnan.routepicker.PreviousJourneysSingleton;
 import uni.tighearnan.routepicker.R;
 import uni.tighearnan.routepicker.User;
@@ -87,11 +88,17 @@ public class TicketFragment extends Fragment {
                     mTicket.getBarcode(),
                     mTicket.isUsed() ? "1" : "0");
 
-            PostASyncTask aSyncTask = new PostASyncTask();
+            UploadTicketASyncTask aSyncTask = new UploadTicketASyncTask(mTicket);
+            aSyncTask.setPostListener(new PostListener() {
+                @Override
+                public void onPostComplete() {
+                    User user = UserSingleton.get(getActivity()).getUser();
+                    user.getTickets().add(0, mTicket);
+                }
+            });
             aSyncTask.execute(url);
 
-            User user = UserSingleton.get(getActivity()).getUser();
-            user.getTickets().add(0, mTicket);
+
         } else {
             String url = getString(R.string.upload_ticket_used_url, mTicket.getId());
             PostASyncTask aSyncTask = new PostASyncTask();
