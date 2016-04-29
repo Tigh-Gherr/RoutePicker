@@ -6,4 +6,4 @@
     android:layout_width="match_parent"
     android:layout_height="1dp"
     android:layout_gravity="bottom"
-    android:background="@color/md_red_400"/>
+    android:background="@color/md_grey_400"/>

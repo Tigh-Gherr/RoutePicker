@@ -1,17 +1,24 @@
 package uni.tighearnan.routepicker.Payment;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.format.DateFormat;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.TextView;
 
 import java.util.Date;
 
@@ -71,6 +78,19 @@ public class PaymentFragment extends Fragment {
         mFirstNameEditText = (AppCompatEditText) v.findViewById(R.id.edit_text_firstName);
         mSurnameEditText = (AppCompatEditText) v.findViewById(R.id.edit_text_surname);
 
+        mSurnameEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_DONE) {
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromInputMethod(getView().getWindowToken(), 0);
+                    mCardTypeSpinner.requestFocus();
+                    mCardTypeSpinner.performClick();
+                }
+                return false;
+            }
+        });
+
         mCardTypeSpinner = (AppCompatSpinner) v.findViewById(R.id.spinner_cardType);
 
         mCardNumberEditText = (AppCompatEditText) v.findViewById(R.id.edit_text_cardNumber);
@@ -80,6 +100,16 @@ public class PaymentFragment extends Fragment {
 
         mBillingAddressLine1EditText = (AppCompatEditText) v.findViewById(R.id.edit_text_addressLine1);
         mBillingAddressLine2EditText = (AppCompatEditText) v.findViewById(R.id.edit_text_addressLine2);
+
+        mCardCVCNumberEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_GO) {
+                    mPayButton.performClick();
+                }
+                return false;
+            }
+        });
 
         mPayButton = (AppCompatButton) v.findViewById(R.id.button_pay);
         mPayButton.setOnClickListener(new View.OnClickListener() {
@@ -95,16 +125,8 @@ public class PaymentFragment extends Fragment {
     }
 
     private void setupInformation() {
-        Intent sender = getActivity().getIntent();
-
         mJourney = CurrentJourneySingleton.get(getActivity()).getJourney();
         mUser = UserSingleton.get(getActivity()).getUser();
-
-//        String from = sender.getStringExtra("FROM");
-//        String to = sender.getStringExtra("TO");
-
-//        String cost = sender.getStringExtra("COST");
-//        boolean isReturn = sender.getBooleanExtra("RETURN", false);
 
         mFromTextView.setText(getString(R.string.journey_detail_from, mJourney.getFromTitle()));
         mToTextView.setText(getString(R.string.journey_detail_to, mJourney.getToTitle()));
@@ -127,6 +149,27 @@ public class PaymentFragment extends Fragment {
         mBillingAddressLine1EditText.setText(creditCard.getAddressLine1());
         mBillingAddressLine2EditText.setText(creditCard.getAddressLine2());
         mCardCVCNumberEditText.setText(creditCard.getCVC());
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mCardTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        mCardNumberEditText.requestFocus();
+                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.showSoftInput(mCardNumberEditText, InputMethodManager.SHOW_IMPLICIT);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+            }
+        }, 200);
+
+
     }
 
     private void checkBillingInfo() {

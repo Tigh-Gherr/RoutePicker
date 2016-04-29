@@ -46,6 +46,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/button_createAccount"
                 style="@style/ButtonStyle"
@@ -55,7 +56,7 @@
                 android:background="#0000"
                 android:layout_marginLeft="8dp"
                 android:text="Create Account"
-                android:textColor="@color/md_blue_400"/>
+                android:textColor="@color/md_indigo_500"/>
 
             <ProgressBar
                 android:id="@+id/progress_bar_signIn"
@@ -66,7 +67,9 @@
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/button_signIn"
-                style="@style/ButtonStyle"
+                android:background="#0000"
+                android:textColor="@color/md_indigo_500"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"

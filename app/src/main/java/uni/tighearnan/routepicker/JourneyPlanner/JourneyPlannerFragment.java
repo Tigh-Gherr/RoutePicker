@@ -71,12 +71,17 @@ public class JourneyPlannerFragment extends Fragment {
                 button = mClearFromImageButton;
             } else if (v == mToEditText) {
                 button = mClearToImageButton;
+            } else {
+                mClearFromImageButton.setVisibility(View.GONE);
+                mClearToImageButton.setVisibility(View.GONE);
             }
 
             if (hasFocus) {
                 DrawableCompat.setTint(button.getDrawable(), ContextCompat.getColor(getActivity(), R.color.colorControlActivated));
+                button.setVisibility(View.VISIBLE);
             } else {
                 DrawableCompat.setTint(button.getDrawable(), ContextCompat.getColor(getActivity(), R.color.md_white_1000));
+                button.setVisibility(View.GONE);
             }
         }
     };
@@ -153,6 +158,9 @@ public class JourneyPlannerFragment extends Fragment {
         separator.setVisibility(checkPreviousJourneys ? View.GONE : View.VISIBLE);
         mPreviousJourneysRecyclerView.setVisibility(checkPreviousJourneys ? View.GONE : View.VISIBLE);
         textView.setVisibility(checkPreviousJourneys ? View.VISIBLE : View.GONE);
+
+        mFromEditText.requestFocus();
+        mClearToImageButton.setVisibility(View.GONE);
     }
 
     private void tryLocations() {

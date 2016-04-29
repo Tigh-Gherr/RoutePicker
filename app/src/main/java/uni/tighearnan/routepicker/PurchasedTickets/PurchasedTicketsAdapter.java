@@ -1,7 +1,5 @@
 package uni.tighearnan.routepicker.PurchasedTickets;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -12,12 +10,8 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import uni.tighearnan.routepicker.AdapterItemSelectedListener;
-import uni.tighearnan.routepicker.CurrentTicketSingleton;
 import uni.tighearnan.routepicker.R;
 import uni.tighearnan.routepicker.Ticket.Ticket;
-import uni.tighearnan.routepicker.Ticket.TicketActivity;
-import uni.tighearnan.routepicker.User;
-import uni.tighearnan.routepicker.UserSingleton;
 
 /**
  * Created by tighearnan on 28/04/16.
@@ -38,7 +32,7 @@ public class PurchasedTicketsAdapter extends RecyclerView.Adapter<PurchasedTicke
     @Override
     public PurchasedTicketViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recycler_item_purchased_ticket, parent, false);
+                .inflate(R.layout.item_purchased_ticket, parent, false);
 
         return new PurchasedTicketViewHolder(v);
     }

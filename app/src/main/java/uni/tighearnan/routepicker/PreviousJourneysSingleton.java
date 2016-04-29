@@ -1,6 +1,7 @@
 package uni.tighearnan.routepicker;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,6 +69,7 @@ public class PreviousJourneysSingleton {
                                                     journey.getToTitle(),
                                                     journey.isReturn() ? "1" : "0",
                                                     journey.getBaseCost());
+        Log.d(getClass().getSimpleName(), url);
         PostASyncTask aSyncTask = new PostASyncTask();
         aSyncTask.execute(url);
     }

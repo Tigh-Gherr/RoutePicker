@@ -1,14 +1,17 @@
 package uni.tighearnan.routepicker.Login;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -191,5 +194,18 @@ public class CreateAccountDialog extends AppCompatDialogFragment {
 
     private boolean isEmpty(AppCompatEditText editText) {
         return editText.getText().length() == 0;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(mFirstNameEditText, InputMethodManager.SHOW_IMPLICIT);
+            }
+        }, 50);
     }
 }

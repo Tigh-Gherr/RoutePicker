@@ -31,7 +31,7 @@ public class PreviousJourneysAdapter extends RecyclerView.Adapter<PreviousJourne
     @Override
     public PreviousTicketsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_previous_ticket, parent, false);
+                .inflate(R.layout.item_previous_journey, parent, false);
 
         return new PreviousTicketsViewHolder(v);
     }
