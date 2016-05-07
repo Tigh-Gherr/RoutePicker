@@ -18,14 +18,14 @@ import uni.tighearnan.routepicker.Ticket.Journey;
 public class PreviousJourneysAdapter extends RecyclerView.Adapter<PreviousJourneysAdapter.PreviousTicketsViewHolder> {
 
     private ArrayList<Journey> mJourneys;
-    private AdapterItemSelectedListener mItemSelectedListener;
+    private AdapterItemSelectedListener mObjectSelectedListener;
 
     public PreviousJourneysAdapter(ArrayList<Journey> journeys) {
         mJourneys = journeys;
     }
 
-    public void setItemSelectedListener(AdapterItemSelectedListener listener) {
-        mItemSelectedListener = listener;
+    public void setObjectSelectedListener(AdapterItemSelectedListener objectSelectedListener) {
+        mObjectSelectedListener = objectSelectedListener;
     }
 
     @Override
@@ -39,7 +39,6 @@ public class PreviousJourneysAdapter extends RecyclerView.Adapter<PreviousJourne
     @Override
     public void onBindViewHolder(PreviousTicketsViewHolder holder, int position) {
         Journey current = mJourneys.get(position);
-//        holder.mRouteName.setText(current.getFromTitle() + " - " + current.getToTitle());
         holder.mRouteFrom.setText("From: " + current.getFromTitle());
         holder.mRouteTo.setText("To: " + current.getToTitle());
     }
@@ -51,25 +50,21 @@ public class PreviousJourneysAdapter extends RecyclerView.Adapter<PreviousJourne
 
     public class PreviousTicketsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-//        AppCompatTextView mRouteName;
         AppCompatTextView mRouteFrom;
         AppCompatTextView mRouteTo;
 
         public PreviousTicketsViewHolder(View itemView) {
             super(itemView);
 
-//            mRouteName = (AppCompatTextView) itemView.findViewById(R.id.text_view_routeName);
             mRouteFrom = (AppCompatTextView) itemView.findViewById(R.id.text_view_from);
             mRouteTo = (AppCompatTextView) itemView.findViewById(R.id.text_view_to);
 
             itemView.setOnClickListener(this);
-//            FrameLayout layout = (FrameLayout) itemView.findViewById(R.id.frame_layout_content);
-//            layout.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            mItemSelectedListener.onAdapterItemSelected(getLayoutPosition());
+            mObjectSelectedListener.onObjectSelected(mJourneys.get(getLayoutPosition()));
         }
     }
 }

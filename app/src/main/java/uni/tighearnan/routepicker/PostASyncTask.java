@@ -20,7 +20,7 @@ public class PostASyncTask extends AsyncTask<String, Void, Void> {
     @Override
     protected Void doInBackground(String... params) {
 
-        HttpURLConnection connection;
+        HttpURLConnection connection = null;
 
         try {
             URL url = new URL(params[0]);
@@ -32,6 +32,10 @@ public class PostASyncTask extends AsyncTask<String, Void, Void> {
 
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
         }
 
         return null;

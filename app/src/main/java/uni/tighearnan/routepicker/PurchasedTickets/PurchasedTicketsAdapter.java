@@ -23,8 +23,7 @@ public class PurchasedTicketsAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static final int TICKET = 1;
 
     private ArrayList<Object> mData;
-    private AdapterItemSelectedListener mItemSelectedListener;
-    private int mNonTicketTotal;
+    private AdapterItemSelectedListener mObjectSelectedListener;
 
     public PurchasedTicketsAdapter(ArrayList<Ticket> tickets) {
         mData = new ArrayList<>();
@@ -32,16 +31,10 @@ public class PurchasedTicketsAdapter extends RecyclerView.Adapter<RecyclerView.V
         mData.add(R.drawable.bus);
         mData.addAll(tickets);
 
-        mNonTicketTotal = 0;
-        for(Object o : mData) {
-            if(!(o instanceof Ticket)) {
-                mNonTicketTotal++;
-            }
-        }
     }
 
-    public void setItemSelectedListener(AdapterItemSelectedListener itemSelectedListener) {
-        mItemSelectedListener = itemSelectedListener;
+    public void setObjectSelectedListener(AdapterItemSelectedListener objectSelectedListener) {
+        mObjectSelectedListener = objectSelectedListener;
     }
 
     @Override
@@ -120,7 +113,7 @@ public class PurchasedTicketsAdapter extends RecyclerView.Adapter<RecyclerView.V
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mItemSelectedListener.onAdapterItemSelected(getAdapterPosition() - mNonTicketTotal);
+                    mObjectSelectedListener.onObjectSelected(mData.get(getAdapterPosition()));
                 }
             });
         }
@@ -135,7 +128,5 @@ public class PurchasedTicketsAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             mHeader = (AppCompatImageView) itemView.findViewById(R.id.image_view_header);
         }
-
-
     }
 }

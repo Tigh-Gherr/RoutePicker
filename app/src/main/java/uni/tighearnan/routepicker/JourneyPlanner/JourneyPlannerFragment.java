@@ -19,9 +19,9 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import uni.tighearnan.routepicker.AdapterItemSelectedListener;
 import uni.tighearnan.routepicker.CurrentJourneySingleton;
 import uni.tighearnan.routepicker.JourneyDetails.JourneyDetailsActivity;
+import uni.tighearnan.routepicker.AdapterItemSelectedListener;
 import uni.tighearnan.routepicker.PreviousJourneysSingleton;
 import uni.tighearnan.routepicker.PurchasedTickets.PurchasedTicketsActivity;
 import uni.tighearnan.routepicker.R;
@@ -120,12 +120,14 @@ public class JourneyPlannerFragment extends Fragment {
         mPreviousJourneysRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_previousJourneys);
         mPreviousJourneysAdapter = new PreviousJourneysAdapter(mPreviousJourneys);
 
-        mPreviousJourneysAdapter.setItemSelectedListener(new AdapterItemSelectedListener() {
+        mPreviousJourneysAdapter.setObjectSelectedListener(new AdapterItemSelectedListener() {
             @Override
-            public void onAdapterItemSelected(int position) {
-                Journey journey = PreviousJourneysSingleton.get(getActivity()).getPreviousJourneys().get(position);
-                CurrentJourneySingleton.get(getActivity()).setJourney(journey);
+            public void onObjectSelected(Object o) {
+                if(!(o instanceof Journey)) {
+                    return;
+                }
 
+                CurrentJourneySingleton.get(getActivity()).setJourney((Journey) o);
                 startActivity(new Intent(getActivity(), JourneyDetailsActivity.class));
             }
         });

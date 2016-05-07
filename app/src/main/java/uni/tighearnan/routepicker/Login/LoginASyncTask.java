@@ -39,7 +39,7 @@ public class LoginASyncTask extends AsyncTask<LoginAuth, Void, User> {
 
     @Override
     protected User doInBackground(LoginAuth... params) {
-        HttpURLConnection connection;
+        HttpURLConnection connection = null;
         User user = null;
         try {
             URL url = new URL(params[0].getUrl());
@@ -68,6 +68,10 @@ public class LoginASyncTask extends AsyncTask<LoginAuth, Void, User> {
 
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if(connection != null) {
+                connection.disconnect();
+            }
         }
 
         return user;

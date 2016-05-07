@@ -1,8 +1,8 @@
 package uni.tighearnan.routepicker;
 
 /**
- * Created by tighearnan on 16/04/16.
+ * Created by tighearnan on 07/05/16.
  */
 public interface AdapterItemSelectedListener {
-    void onAdapterItemSelected(int position);
+    void onObjectSelected(Object o);
 }

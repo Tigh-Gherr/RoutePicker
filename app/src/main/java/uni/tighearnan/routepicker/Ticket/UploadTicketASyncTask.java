@@ -30,7 +30,7 @@ public class UploadTicketASyncTask extends AsyncTask<String, Void, Integer> {
 
     @Override
     protected Integer doInBackground(String... params) {
-        HttpURLConnection connection;
+        HttpURLConnection connection = null;
         int id = -1;
 
         try {
@@ -56,6 +56,10 @@ public class UploadTicketASyncTask extends AsyncTask<String, Void, Integer> {
 
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
         }
         return id;
     }

@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import uni.tighearnan.routepicker.AdapterItemSelectedListener;
 import uni.tighearnan.routepicker.CurrentTicketSingleton;
+import uni.tighearnan.routepicker.AdapterItemSelectedListener;
 import uni.tighearnan.routepicker.R;
 import uni.tighearnan.routepicker.Ticket.Ticket;
 import uni.tighearnan.routepicker.Ticket.TicketActivity;
@@ -41,13 +41,17 @@ public class PurchasedTicketsFragment extends Fragment {
 
         mTicketsRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_purchasedTickets);
         mTicketsAdapter = new PurchasedTicketsAdapter(user.getTickets());
-        mTicketsAdapter.setItemSelectedListener(new AdapterItemSelectedListener() {
+        mTicketsAdapter.setObjectSelectedListener(new AdapterItemSelectedListener() {
             @Override
-            public void onAdapterItemSelected(int position) {
+            public void onObjectSelected(Object o) {
+                if(!(o instanceof Ticket)) {
+                    return;
+                }
+
                 Intent i = new Intent(getActivity(), TicketActivity.class);
                 i.putExtra("PURCHASED", false);
 
-                CurrentTicketSingleton.get(getActivity()).setTicket(user.getTickets().get(position));
+                CurrentTicketSingleton.get(getActivity()).setTicket((Ticket)o);
                 startActivity(i);
             }
         });
