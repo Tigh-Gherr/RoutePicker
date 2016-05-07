@@ -120,14 +120,14 @@ public class JourneyPlannerFragment extends Fragment {
         mPreviousJourneysRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_previousJourneys);
         mPreviousJourneysAdapter = new PreviousJourneysAdapter(mPreviousJourneys);
 
-        mPreviousJourneysAdapter.setObjectSelectedListener(new AdapterItemSelectedListener() {
+        mPreviousJourneysAdapter.setItemSelectedListener(new AdapterItemSelectedListener() {
             @Override
-            public void onObjectSelected(Object o) {
-                if(!(o instanceof Journey)) {
+            public void onObjectSelected(Object item) {
+                if(!(item instanceof Journey)) {
                     return;
                 }
 
-                CurrentJourneySingleton.get(getActivity()).setJourney((Journey) o);
+                CurrentJourneySingleton.get(getActivity()).setJourney((Journey) item);
                 startActivity(new Intent(getActivity(), JourneyDetailsActivity.class));
             }
         });

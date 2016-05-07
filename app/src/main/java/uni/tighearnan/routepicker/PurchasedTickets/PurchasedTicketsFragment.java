@@ -37,21 +37,21 @@ public class PurchasedTicketsFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_purchased_tickets, container, false);
 
-        final User user = UserSingleton.get(getActivity()).getUser();
+        User user = UserSingleton.get(getActivity()).getUser();
 
         mTicketsRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_purchasedTickets);
         mTicketsAdapter = new PurchasedTicketsAdapter(user.getTickets());
-        mTicketsAdapter.setObjectSelectedListener(new AdapterItemSelectedListener() {
+        mTicketsAdapter.setItemSelectedListener(new AdapterItemSelectedListener() {
             @Override
-            public void onObjectSelected(Object o) {
-                if(!(o instanceof Ticket)) {
+            public void onObjectSelected(Object item) {
+                if(!(item instanceof Ticket)) {
                     return;
                 }
 
                 Intent i = new Intent(getActivity(), TicketActivity.class);
                 i.putExtra("PURCHASED", false);
 
-                CurrentTicketSingleton.get(getActivity()).setTicket((Ticket)o);
+                CurrentTicketSingleton.get(getActivity()).setTicket((Ticket) item);
                 startActivity(i);
             }
         });

@@ -23,18 +23,39 @@ public class PurchasedTicketsAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static final int TICKET = 1;
 
     private ArrayList<Object> mData;
-    private AdapterItemSelectedListener mObjectSelectedListener;
+    private AdapterItemSelectedListener mItemSelectedListener;
 
     public PurchasedTicketsAdapter(ArrayList<Ticket> tickets) {
         mData = new ArrayList<>();
-//        mData.add(R.drawable.golden_gate_bridge);
-        mData.add(R.drawable.bus);
+        mData.add(R.drawable.golden_gate_bridge);
         mData.addAll(tickets);
-
+        mData.add(R.drawable.bus);
     }
 
-    public void setObjectSelectedListener(AdapterItemSelectedListener objectSelectedListener) {
-        mObjectSelectedListener = objectSelectedListener;
+    public void setItemSelectedListener(AdapterItemSelectedListener itemSelectedListener) {
+        mItemSelectedListener = itemSelectedListener;
+    }
+
+    private void configureHeader(HeaderViewHolder holder, int position) {
+        holder.mHeader.setImageResource((Integer) mData.get(position));
+    }
+
+    private void configureTicket(PurchasedTicketViewHolder holder, int position) {
+        Ticket ticket = (Ticket) mData.get(position);
+        holder.mFromTextView.setText("From: " + ticket.getFrom());
+        holder.mToTextView.setText("To: " + ticket.getTo());
+        holder.mUsedCheckBox.setChecked(ticket.isUsed());
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if(mData.get(position) instanceof Ticket) {
+            return TICKET;
+        } else if(mData.get(position) instanceof Integer) {
+            return HEADER;
+        }
+
+        return -1;
     }
 
     @Override
@@ -70,31 +91,9 @@ public class PurchasedTicketsAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
-    private void configureHeader(HeaderViewHolder holder, int position) {
-        holder.mHeader.setImageResource((Integer) mData.get(position));
-    }
-
-    private void configureTicket(PurchasedTicketViewHolder holder, int position) {
-        Ticket ticket = (Ticket) mData.get(position);
-        holder.mFromTextView.setText("From: " + ticket.getFrom());
-        holder.mToTextView.setText("To: " + ticket.getTo());
-        holder.mUsedCheckBox.setChecked(ticket.isUsed());
-    }
-
     @Override
     public int getItemCount() {
         return mData.size();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        if(mData.get(position) instanceof Ticket) {
-            return TICKET;
-        } else if(mData.get(position) instanceof Integer) {
-            return HEADER;
-        }
-
-        return -1;
     }
 
     public class PurchasedTicketViewHolder extends RecyclerView.ViewHolder {
@@ -113,7 +112,7 @@ public class PurchasedTicketsAdapter extends RecyclerView.Adapter<RecyclerView.V
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mObjectSelectedListener.onObjectSelected(mData.get(getAdapterPosition()));
+                    mItemSelectedListener.onObjectSelected(mData.get(getAdapterPosition()));
                 }
             });
         }

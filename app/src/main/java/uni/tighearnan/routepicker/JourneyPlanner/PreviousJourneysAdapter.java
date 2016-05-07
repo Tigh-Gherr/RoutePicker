@@ -18,14 +18,14 @@ import uni.tighearnan.routepicker.Ticket.Journey;
 public class PreviousJourneysAdapter extends RecyclerView.Adapter<PreviousJourneysAdapter.PreviousTicketsViewHolder> {
 
     private ArrayList<Journey> mJourneys;
-    private AdapterItemSelectedListener mObjectSelectedListener;
+    private AdapterItemSelectedListener mItemSelectedListener;
 
     public PreviousJourneysAdapter(ArrayList<Journey> journeys) {
         mJourneys = journeys;
     }
 
-    public void setObjectSelectedListener(AdapterItemSelectedListener objectSelectedListener) {
-        mObjectSelectedListener = objectSelectedListener;
+    public void setItemSelectedListener(AdapterItemSelectedListener itemSelectedListener) {
+        mItemSelectedListener = itemSelectedListener;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class PreviousJourneysAdapter extends RecyclerView.Adapter<PreviousJourne
         return mJourneys.size();
     }
 
-    public class PreviousTicketsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class PreviousTicketsViewHolder extends RecyclerView.ViewHolder {
 
         AppCompatTextView mRouteFrom;
         AppCompatTextView mRouteTo;
@@ -59,12 +59,12 @@ public class PreviousJourneysAdapter extends RecyclerView.Adapter<PreviousJourne
             mRouteFrom = (AppCompatTextView) itemView.findViewById(R.id.text_view_from);
             mRouteTo = (AppCompatTextView) itemView.findViewById(R.id.text_view_to);
 
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            mObjectSelectedListener.onObjectSelected(mJourneys.get(getLayoutPosition()));
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mItemSelectedListener.onObjectSelected(mJourneys.get(getLayoutPosition()));
+                }
+            });
         }
     }
 }
