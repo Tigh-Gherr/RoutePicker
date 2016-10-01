@@ -27,9 +27,9 @@ public class PurchasedTicketsAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     public PurchasedTicketsAdapter(ArrayList<Ticket> tickets) {
         mData = new ArrayList<>();
-        mData.add(R.drawable.golden_gate_bridge);
+//        mData.add(R.drawable.golden_gate_bridge);
         mData.addAll(tickets);
-        mData.add(R.drawable.bus);
+//        mData.add(R.drawable.bus);
     }
 
     public void setItemSelectedListener(AdapterItemSelectedListener itemSelectedListener) {
