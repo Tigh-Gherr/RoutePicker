@@ -18,6 +18,7 @@ import android.widget.TextView;
 import uni.tighearnan.routepicker.PostASyncTask;
 import uni.tighearnan.routepicker.PostListener;
 import uni.tighearnan.routepicker.R;
+import uni.tighearnan.routepicker.utils.EncryptionUtils;
 
 /**
  * Created by tighearnan on 24/04/16.
@@ -108,6 +109,8 @@ public class CreateAccountDialog extends AppCompatDialogFragment {
             String email = mEmailEditText.getText().toString();
             String password = mPasswordEditText.getText().toString();
 
+            String hashPass = EncryptionUtils.sha256(password);
+
             PostASyncTask task = new PostASyncTask();
             task.setListener(new PostListener() {
                 @Override
@@ -116,7 +119,7 @@ public class CreateAccountDialog extends AppCompatDialogFragment {
                     getDialog().dismiss();
                 }
             });
-            task.execute(getString(R.string.create_account_url, fname, sname, email, password));
+            task.execute(getString(R.string.create_account_url, fname, sname, email, hashPass));
         }
     }
 

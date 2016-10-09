@@ -26,6 +26,7 @@ import uni.tighearnan.routepicker.PreviousJourneysSingleton;
 import uni.tighearnan.routepicker.R;
 import uni.tighearnan.routepicker.User;
 import uni.tighearnan.routepicker.UserSingleton;
+import uni.tighearnan.routepicker.utils.EncryptionUtils;
 
 
 /**
@@ -154,6 +155,8 @@ public class SignInFragment extends Fragment {
             // TODO: Network checks.
             mSignInProgressBar.setVisibility(View.VISIBLE);
 
+            String hashPass = EncryptionUtils.sha256(password);
+
             LoginASyncTask loginASyncTask = new LoginASyncTask(getActivity());
             loginASyncTask.setResultListener(new LoginResultListener() {
                 @Override
@@ -180,7 +183,7 @@ public class SignInFragment extends Fragment {
 
                 }
             });
-            loginASyncTask.execute(new LoginAuth(getActivity(), email.toLowerCase(), password));
+            loginASyncTask.execute(new LoginAuth(getActivity(), email.toLowerCase(), hashPass));
         }
     }
 
